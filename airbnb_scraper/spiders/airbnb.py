@@ -425,7 +425,9 @@ class AirbnbSpider(scrapy.Spider):
         for month in months:
             available_future_days = 0
             future_days = 0
+            total_days = 0
             # date_info = {}
+            has_price_error = False
             prices = []
             days = month.get('days')
             month_num = month.get('month')
@@ -434,6 +436,7 @@ class AirbnbSpider(scrapy.Spider):
             future_revenue = 0.0
 
             for day in days:
+                total_days += 1
                 date_str = day.get('date')
                 date = arrow.get(date_str).replace(tzinfo=time_zone_safe)
                 assert date.tzinfo == today_local.tzinfo
@@ -464,8 +467,8 @@ class AirbnbSpider(scrapy.Spider):
 
                 if bool(price):
                     # date_info['price'] = price
-                    if is_future and future_revenue >= 0 and not available:
-                        future_revenue += price
+                    future_revenue += price
+                    prices.append(price)
                     
                     if not _is_empty_price_datespan(current_price_timespan) and price != current_price_timespan['price']:
                         _end_price_datespan(current_price_timespan, price_timespans)
@@ -473,8 +476,7 @@ class AirbnbSpider(scrapy.Spider):
                     _continue_price_datespan(current_price_timespan, date_str, price)
                 else:
                     # Handle missing price
-                    if is_future and not available:
-                        future_revenue = -1.0
+                    has_price_error = True
 
                     _end_price_datespan(current_price_timespan, price_timespans)
                     current_price_timespan = _empty_price_datespan()
@@ -495,8 +497,14 @@ class AirbnbSpider(scrapy.Spider):
                 'year': year_num,
                 'availability': availability
             }
-            if future_revenue >= 0:
+            if not has_price_error:
+                prices.sort()
+
                 month_info['future_revenue'] = future_revenue
+                month_info['average_price'] = round(sum(prices) / total_days)
+                month_info['median_price'] = prices[int(total_days / 2)]
+                month_info['lowest_price'] = prices[0]
+                month_info['highest_price'] = prices[-1]
             month_infos[month_info_id] = month_info
 
         _end_available_datespan(current_available_timespan, available_timespans)
