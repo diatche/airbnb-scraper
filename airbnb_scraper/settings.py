@@ -14,6 +14,8 @@ BOT_NAME = 'airbnb_scraper'
 SPIDER_MODULES = ['airbnb_scraper.spiders']
 NEWSPIDER_MODULE = 'airbnb_scraper.spiders'
 
+MONGO_URI = 'localhost:27017'
+MONGO_DATABASE = 'airbnb_1'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'airbnb_scraper (+http://www.yourdomain.com)'
@@ -72,9 +74,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'airbnb_scraper.pipelines.AirbnbScraperPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'airbnb_scraper.pipelines.AirbnbMongoPipeline': 100,
+#    'airbnb_scraper.pipelines.AirbnbJsonPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

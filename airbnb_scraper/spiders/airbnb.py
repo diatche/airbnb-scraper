@@ -246,6 +246,7 @@ class AirbnbSpider(scrapy.Spider):
         listing = AirbnbListing()
 
         # Fill in fields for Instance from initial scrapy call
+        listing['_id'] = response.meta['listing_id']
         listing['listing_id'] = response.meta['listing_id']
         listing['is_superhost'] = response.meta['is_superhost']
         listing['host_id'] = str(response.meta['host_id'])
@@ -316,6 +317,8 @@ class AirbnbSpider(scrapy.Spider):
         #     listing['response_rate'] = 0
         #     listing['response_time'] = ''
 
+        # hash_value = listing.update_hash(id_sensitive=True)
+
         # Finally return the object
         yield listing
 
@@ -355,6 +358,7 @@ class AirbnbSpider(scrapy.Spider):
 
         now_local = arrow.utcnow().to(time_zone_safe)
         today_local = now_local.floor('day')
+        current_date = today_local.format('YYYY-MM-DD')
 
         def _empty_available_datespan():
             return {
@@ -416,6 +420,7 @@ class AirbnbSpider(scrapy.Spider):
         price_timespans = []
         current_price_timespan = _empty_price_datespan()
         date_str = ''
+        start_date = ''
 
         for month in months:
             available_future_days = 0
@@ -434,8 +439,9 @@ class AirbnbSpider(scrapy.Spider):
                 assert date.tzinfo == today_local.tzinfo
                 is_future = date >= today_local
 
-                if not bool(calendar['start_date']):
-                    calendar['start_date'] = date_str
+                if not bool(start_date):
+                    start_date = date_str
+                    calendar['start_date'] = start_date
 
                 # Availability
                 available = day.get('available')
@@ -496,10 +502,15 @@ class AirbnbSpider(scrapy.Spider):
         _end_available_datespan(current_available_timespan, available_timespans)
         _end_price_datespan(current_price_timespan, price_timespans)
 
-        calendar['end_date'] = date_str
+        end_date = date_str
+        calendar['end_date'] = end_date
         calendar['months'] = month_infos
         # calendar['dates'] = date_infos
         calendar['availability'] = available_timespans
         calendar['prices'] = price_timespans
+
+        # hash_value = calendar.update_hash(id_sensitive=False)
+        # calendar['_id'] = f'{listing_id}_{hash_value}'
+        calendar['_id'] = f'{listing_id}_{current_date}_{end_date}'
 
         yield calendar

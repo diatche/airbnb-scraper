@@ -5,10 +5,13 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
 
+import json
 import arrow
 import scrapy
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
 from airbnb_scraper import constants
+
+ID_KEY = '_id'
 
 
 def remove_unicode(value):
@@ -17,15 +20,29 @@ def remove_unicode(value):
 
 class AirbnbItem(scrapy.Item):
 
+    _id = scrapy.Field()
     item_type = scrapy.Field()
     creation_date = scrapy.Field()
     app_version = scrapy.Field()
+    # hash_value = scrapy.Field()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self['item_type'] = str(type(self).__name__)
         self['creation_date'] = arrow.get().format()
         self['app_version'] = constants.APP_VERSION
+        # self['hash_value'] = ''
+
+    # def update_hash(self, id_sensitive=False):
+    #     d = dict(self)
+    #     del d['creation_date']
+    #     del d['app_version']
+    #     if 'hash_value' in d:
+    #         del d['hash_value']
+    #     if not id_sensitive and ID_KEY in d:
+    #         del d[ID_KEY]
+    #     self['hash_value'] = hash(json.dumps(d, sort_keys=True))
+    #     return self['hash_value']
 
 
 class AirbnbListing(AirbnbItem):
