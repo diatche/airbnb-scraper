@@ -39,8 +39,8 @@ class AirbnbSpider(scrapy.Spider):
     You don't have to override __init__ each time and can simply use self.parameter (See https://bit.ly/2Wxbkd9),
     but I find this way much more readable.
     """
-    def __init__(self, city='',price_lb='', price_ub='', currency='', *args,**kwargs):
-        super(AirbnbSpider, self).__init__(*args, **kwargs)
+    def __init__(self, city='',price_lb='', price_ub='', currency='', *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.city = city
         self.price_lb = int(math.ceil(float(price_lb))) if bool(price_lb) else 0
         self.price_ub = int(math.floor(float(price_ub))) if bool(price_ub) else 0
@@ -350,6 +350,8 @@ class AirbnbSpider(scrapy.Spider):
         calendar['listing_id'] = listing_id
         calendar['currency'] = response.meta['currency']
         calendar['time_zone'] = time_zone
+        calendar['start_date'] = ''
+        calendar['end_date'] = ''
 
         now_local = arrow.utcnow().to(time_zone_safe)
         today_local = now_local.floor('day')
@@ -413,6 +415,7 @@ class AirbnbSpider(scrapy.Spider):
         current_available_timespan = _empty_available_datespan()
         price_timespans = []
         current_price_timespan = _empty_price_datespan()
+        date_str = ''
 
         for month in months:
             available_future_days = 0
@@ -430,6 +433,9 @@ class AirbnbSpider(scrapy.Spider):
                 date = arrow.get(date_str).replace(tzinfo=time_zone_safe)
                 assert date.tzinfo == today_local.tzinfo
                 is_future = date >= today_local
+
+                if not bool(calendar['start_date']):
+                    calendar['start_date'] = date_str
 
                 # Availability
                 available = day.get('available')
@@ -490,6 +496,7 @@ class AirbnbSpider(scrapy.Spider):
         _end_available_datespan(current_available_timespan, available_timespans)
         _end_price_datespan(current_price_timespan, price_timespans)
 
+        calendar['end_date'] = date_str
         calendar['months'] = month_infos
         # calendar['dates'] = date_infos
         calendar['availability'] = available_timespans

@@ -91,6 +91,8 @@ class AirbnbListingCalendar(AirbnbItem):
     time_zone = scrapy.Field()
     currency = scrapy.Field()
     months = scrapy.Field()
+    start_date = scrapy.Field()
+    end_date = scrapy.Field()
     # dates = scrapy.Field()
     availability = scrapy.Field()
     prices = scrapy.Field()
