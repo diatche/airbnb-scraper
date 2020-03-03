@@ -6,6 +6,7 @@ import numpy as np
 import logging
 import sys
 import scrapy
+import math
 import arrow
 import dateutil
 from scrapy_splash import SplashRequest
@@ -14,8 +15,11 @@ from airbnb_scraper.items import AirbnbListing, AirbnbListingCalendar
 from timezonefinder import TimezoneFinder
 
 AVAILABILITY_MONTHS = 6
+EXPLORE_BASE_URL = 'https://www.airbnb.com/api/v2/explore_tabs'
 LISTING_BASE_URL = 'https://www.airbnb.com/rooms/'
-CALENDAR_BASE_URL = f'https://www.airbnb.com/api/v2/homes_pdp_availability_calendar'
+CALENDAR_BASE_URL = 'https://www.airbnb.com/api/v2/homes_pdp_availability_calendar'
+KEY = 'd306zoyjsyarp7ifhu67rjxn52tv0t20'
+LOCALE = 'en'
 
 
 # ********************************************************************************************
@@ -31,62 +35,86 @@ class AirbnbSpider(scrapy.Spider):
     name = 'airbnb'
     allowed_domains = ['www.airbnb.com']
 
-    '''
+    """
     You don't have to override __init__ each time and can simply use self.parameter (See https://bit.ly/2Wxbkd9),
     but I find this way much more readable.
-    '''
+    """
     def __init__(self, city='',price_lb='', price_ub='', currency='', *args,**kwargs):
         super(AirbnbSpider, self).__init__(*args, **kwargs)
         self.city = city
-        self.price_lb = price_lb
-        self.price_ub = price_ub
+        self.price_lb = int(math.ceil(float(price_lb))) if bool(price_lb) else 0
+        self.price_ub = int(math.floor(float(price_ub))) if bool(price_ub) else 0
         self.currency = currency or 'NZD'
         self.request_date = arrow.get()
 
+    def base_params(self):
+        return {
+            'currency': self.currency,
+            'key': KEY,
+            'locale': LOCALE,
+        }
+
+    @classmethod
+    def create_url(cls, base, params=None):
+        if not bool(params):
+            return base
+        return base + '?' + '&'.join([f'{k}={v}' for k, v in params.items()])
+
+    def create_explore_url(self, items_offset=0, section_offset=0):
+        params = self.base_params()
+        params.update({
+            '_format': 'for_explore_search_web',
+            'fetch_filters': 'true',
+            'has_zero_guest_treatment': 'true',
+            'is_guided_search': 'true',
+            'is_new_cards_experiment': 'true',
+            'is_standard_search': 'true',
+            'items_per_grid': '18',
+            'luxury_pre_launch': 'false',
+            'metadata_only': 'false',
+            'query': self.city,
+            'query_understanding_enabled': 'true',
+            'refinement_paths%5B%5D': '%2Fhomes',
+            'search_type': 'FILTER_CHANGE',
+            'selected_tab_id': 'home_tab',
+            'show_groupings': 'true',
+            'supports_for_you_v3': 'true',
+            'timezone_offset': '-240',
+            'version': '1.5.6'
+        })
+        if self.price_lb > 0:
+            params['price_min'] = self.price_lb
+        if self.price_lb > 0 and self.price_ub > self.price_lb:
+            params['price_max'] = self.price_ub
+        if bool(items_offset):
+            params['items_offset'] = items_offset
+        if bool(section_offset):
+            params['section_offset'] = section_offset
+
+        return type(self).create_url(EXPLORE_BASE_URL, params=params)
+
     def start_requests(self):
-        '''Sends a scrapy request to the designated url price range
+        """Sends a scrapy request to the designated url price range
 
         Args:
         Returns:
-        '''
+        """
 
-        url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-              '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-              '621cf853-d03e-4108-b717-c14962b6ab8b&currency={3}&experiences_per_grid=20&fetch_filters=true'
-              '&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-              '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-              '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false&'
-              'query={2}'
-              '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-              '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-              '&timezone_offset=-240&version=1.5.6'                  
-              '&price_min={0}&price_max={1}')
-        new_url = url.format(self.price_lb, self.price_ub, self.city, self.currency)
-            
-        if (int(self.price_lb)  >= 990):
-            url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-              '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-              '621cf853-d03e-4108-b717-c14962b6ab8b&currency={2}&experiences_per_grid=20&fetch_filters=true'
-              '&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-              '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-              '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false&'
-              'query={1}'
-              '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-              '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-              '&timezone_offset=-240&version=1.5.6'                  
-              '&price_min={0}')
-            new_url = url.format(self.price_lb, self.city, self.currency)
-
-        yield scrapy.Request(url=new_url, callback=self.parse_id, dont_filter=True)
-
+        url = self.create_explore_url()
+        # self.logger.debug(f'Exploring: \n{url}')
+        yield scrapy.Request(
+            url=url,
+            callback=self.parse_id,
+            dont_filter=True
+        )
 
     def parse_id(self, response):
-        '''Parses all the URLs/ids/available fields from the initial json object and stores into dictionary
+        """Parses all the URLs/ids/available fields from the initial json object and stores into dictionary
 
         Args:
             response: Json object from explore_tabs
         Returns:
-        '''
+        """
         
         # Fetch and Write the response data
         data = json.loads(response.body)
@@ -103,8 +131,6 @@ class AirbnbSpider(scrapy.Spider):
                 except:
                     raise CloseSpider("No homes available in the city and price parameters")
 
-        LISTING_BASE_URL = 'https://www.airbnb.com/rooms/'
-        CALENDAR_BASE_URL = f'https://www.airbnb.com/api/v2/homes_pdp_availability_calendar'
         data_dict = collections.defaultdict(dict) # Create Dictionary to put all currently available fields in
 
         tf = TimezoneFinder()
@@ -161,16 +187,19 @@ class AirbnbSpider(scrapy.Spider):
         # Iterate through dictionary of URLs in the single page to send a SplashRequest for each
         for listing_id in data_dict:
             listing_data = data_dict.get(listing_id)
-            yield SplashRequest(url=LISTING_BASE_URL+listing_id, callback=self.parse_listing,
-                                meta=listing_data,
-                                endpoint="render.html",
-                                args={'wait': '0.5'})
+            yield SplashRequest(
+                url=LISTING_BASE_URL+listing_id,
+                callback=self.parse_listing,
+                meta=listing_data,
+                endpoint="render.html",
+                args={'wait': '0.5'}
+            )
 
             # Get calendar
             # Note: using meta with this request breaks the listing request above
             time_zone = listing_data['time_zone']
             local_request_date = self.request_date.to(time_zone or 'UTC')
-            calendar_url = CALENDAR_BASE_URL + '?' + '&'.join([f'{k}={v}' for k, v in {
+            calendar_url = type(self).create_url(CALENDAR_BASE_URL, params={
                 'currency': self.currency,
                 'key': 'd306zoyjsyarp7ifhu67rjxn52tv0t20',
                 'locale': 'en',
@@ -178,64 +207,39 @@ class AirbnbSpider(scrapy.Spider):
                 'month': local_request_date.month,
                 'year': local_request_date.year,
                 'count': AVAILABILITY_MONTHS,
-            }.items()])
+            })
             calendar_meta = {
                 'listing_id': listing_id,
                 'currency': self.currency,
                 'time_zone': time_zone
             }
-            yield SplashRequest(url=calendar_url, callback=self.parse_calendar,
-                                meta=calendar_meta,
-                                # endpoint="render.html",
-                                args={'wait': '0.5'})
+            yield SplashRequest(
+                url=calendar_url,
+                callback=self.parse_calendar,
+                meta=calendar_meta,
+                args={'wait': '0.5'}
+            )
 
         # After scraping entire listings page, check if more pages
         pagination_metadata = data.get('explore_tabs')[0].get('pagination_metadata')
         if pagination_metadata.get('has_next_page'):
-
-            items_offset = pagination_metadata.get('items_offset')
-            section_offset = pagination_metadata.get('section_offset')
-
-            new_url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-                      '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-                      '621cf853-d03e-4108-b717-c14962b6ab8b&currency={5}&experiences_per_grid=20'
-                      '&fetch_filters=true&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-                      '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-                      '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false'
-                      '&query={4}'
-                      '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-                      '&satori_version=1.1.9&screen_height=797&screen_size=medium&screen_width=885'
-                      '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-                      '&timezone_offset=-240&version=1.5.6'
-                      '&items_offset={0}&section_offset={1}&price_min={2}&price_max={3}')
-            new_url = new_url.format(items_offset, section_offset, self.price_lb, self.price_ub, self.city, self.currency)
-            
-            if (int(self.price_lb) >= 990):
-                url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-                      '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-                      '621cf853-d03e-4108-b717-c14962b6ab8b&currency={4}&experiences_per_grid=20'
-                      '&fetch_filters=true&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-                      '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-                      '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false'
-                      '&query={3}'
-                      '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-                      '&satori_version=1.1.9&screen_height=797&screen_size=medium&screen_width=885'
-                      '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-                      '&timezone_offset=-240&version=1.5.6'
-                      '&items_offset={0}&section_offset={1}&price_min={2}')
-                new_url = url.format(items_offset, section_offset, self.price_lb, self.city, self.currency)
-            
             # If there is a next page, update url and scrape from next page
-            yield scrapy.Request(url=new_url, callback=self.parse_id)
+            url = self.create_explore_url(
+                items_offset=pagination_metadata.get('items_offset'),
+                section_offset=pagination_metadata.get('section_offset'),
+            )
+            # self.logger.debug(f'Exploring: \n{url}')
+            yield scrapy.Request(url=url, callback=self.parse_id)
 
     def parse_listing(self, response):
-        '''Parses details for a single listing page and stores into AirbnbListing object
+        """
+        Parses details for a single listing page and stores into AirbnbListing object
 
         Args:
             response: The response from the page (same as inspecting page source)
         Returns:
             An AirbnbListing object containing the set of fields pertaining to the listing
-        '''
+        """
         assert response.url.startswith(LISTING_BASE_URL), f'Unexpected listing response URL: {response.url}'
 
         # New Instance
