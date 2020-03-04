@@ -1,0 +1,1 @@
+https://www.airbnb.com/api/v2/homes_pdp_availability_calendar?currency=NZD&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&listing_id=19049440&month=3&year=2020&count=6

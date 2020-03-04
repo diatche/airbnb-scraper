@@ -6,55 +6,50 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import os
-import pymongo
 from pathlib import Path
 from scrapy.exporters import JsonItemExporter
 from scrapy.exceptions import DropItem
-from airbnb_scraper.items import AirbnbListing, AirbnbListingCalendar, ID_KEY
+from airbnb_scraper.db import AirbnbMongoDB
+from airbnb_scraper.items import AirbnbItem, ID_KEY
 
 TEMP_DIR = Path(os.path.abspath(os.path.dirname(__file__))) / 'temp'
 
 
 class AirbnbMongoPipeline(object):
 
-    listings_collection_name = 'listings'
-    calendars_collection_name = 'calendars'
-
-    def __init__(self, mongo_uri, mongo_db):
-        self.mongo_uri = mongo_uri
-        self.mongo_db = mongo_db
+    def __init__(self, client=None):
+        self.client = client or AirbnbMongoDB.shared()
 
     @classmethod
     def from_crawler(cls, crawler):
-        return cls(
-            mongo_uri=crawler.settings.get('MONGO_URI', ''),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', '')
-        )
+        # Prefer shared database
+        shared_client = AirbnbMongoDB.shared()
+        mongo_uri = crawler.settings.get('MONGO_URI') or shared_client.mongo_uri
+        mongo_db = crawler.settings.get('MONGO_DATABASE') or shared_client.mongo_db
+
+        if mongo_uri == shared_client.mongo_uri and mongo_db == shared_client.mongo_db:
+            client = shared_client
+        else:
+            client = AirbnbMongoDB(
+                mongo_uri=mongo_uri,
+                mongo_db=mongo_db
+            )
+
+        return AirbnbMongoPipeline(client=client)
 
     def open_spider(self, spider):
-        spider.logger.debug(f'Opening MongoDB connection (uri: {self.mongo_uri}, db: {self.mongo_db})')
-        self.client = pymongo.MongoClient(self.mongo_uri)
-        self.db = self.client[self.mongo_db]
+        spider.logger.debug(f'Pipeline opening MongoDB connection')
+        self.client.open()
 
     def close_spider(self, spider):
-        spider.logger.debug(f'Closing MongoDB connection (uri: {self.mongo_uri}, db: {self.mongo_db})')
+        spider.logger.debug(f'Pipeline closing MongoDB connection')
         self.client.close()
 
     def process_item(self, item, spider):
-        doc = dict(item)
-        # spider.logger.debug(f'Saving item to MongoDB: {doc}')
-        if isinstance(item, AirbnbListing):
-            collection = self.db[self.listings_collection_name]
-        elif isinstance(item, AirbnbListingCalendar):
-            collection = self.db[self.calendars_collection_name]
-        else:
+        spider.logger.debug(f'Pipeline saving item to MongoDB')
+        if not isinstance(item, AirbnbItem):
             raise TypeError(f'Unknown item type: {type(item).__name__}')
-        
-        collection.update_one(
-            {ID_KEY: item[ID_KEY]},
-            {'$set': doc},
-            upsert=True
-        )
+        item.save()
         return item
 
 

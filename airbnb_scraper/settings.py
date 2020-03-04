@@ -9,6 +9,8 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+PROJECT_VERSION = "0.1.0"
+
 BOT_NAME = 'airbnb_scraper'
 
 SPIDER_MODULES = ['airbnb_scraper.spiders']
