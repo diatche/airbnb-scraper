@@ -8,7 +8,7 @@ Spider built with scrapy and ScrapySplash to crawl listings
 
 - [x] Spider can successfully parse one page of listings  
 - [x] Spider can successfully parse mutliple/all pages of designated location
-- [x] Spider can take price ranges as arguments (`price_lb` and `price_ub`)
+- [x] Spider can take price ranges as arguments (`price_min` and `price_max`)
 - [x] Spider can take location as argument  
 
 ## Set up
@@ -33,7 +33,7 @@ See [scrapy-splash](https://github.com/scrapy-plugins/scrapy-splash) if you run 
 
 ## Crawling
 
-Run the spider with `scrapy crawl airbnb -o {filename}.json -a city='{cityname}' -a price_lb='{pricelowerbound}' -a price_ub='{priceupperbound}'`
+Run the spider with `scrapy crawl airbnb -o {filename}.json -a city='{cityname}' -a price_min='{pricelowerbound}' -a price_max='{priceupperbound}'`
 
 `cityname` refers to a valid city name
 

@@ -31,7 +31,7 @@ LOCALE = 'en'
 
 
 # *********************************************************************************************
-# Run crawler with -> scrapy crawl airbnb -o 21to25.json -a price_lb='' -a price_ub=''        *
+# Run crawler with -> scrapy crawl airbnb -o 21to25.json -a price_min='' -a price_max=''        *
 # *********************************************************************************************
 
 class AirbnbSpider(scrapy.Spider):
@@ -42,22 +42,40 @@ class AirbnbSpider(scrapy.Spider):
     You don't have to override __init__ each time and can simply use self.parameter (See https://bit.ly/2Wxbkd9),
     but I find this way much more readable.
     """
-    def __init__(self, city='', price_lb='', price_ub='', currency='', months=AVAILABILITY_MONTHS, *args, **kwargs):
+    def __init__(self, city='', currency='', months=AVAILABILITY_MONTHS, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.city = city
-        self.price_lb = int(math.ceil(float(price_lb))) if bool(price_lb) else 0
-        self.price_ub = int(math.floor(float(price_ub))) if bool(price_ub) else 0
-        self.currency = currency or 'NZD'
+        self.filters = dict(kwargs)
+        if bool(city):
+            self.filters['query'] = city
+
+        if 'price_min' not in self.filters:
+             self.filters['price_min'] = 0
+        self.filters['price_min'] = int(math.ceil(float(self.filters['price_min'])))
+
+        if 'price_max' not in self.filters:
+             self.filters['price_max'] = 0
+        self.filters['price_max'] = int(math.floor(float(self.filters['price_max'])))
+
+        if self.filters['price_max'] <= 0 or self.filters['price_max'] < self.filters['price_min']:
+            del self.filters['price_max']
+
+        if self.filters['price_min'] <= 0:
+            del self.filters['price_min']
+
+        self.logger.debug(f'Created crawler with filters: {self.filters}')
+
+        self.currency = currency
         self.months = months
         self.request_date = arrow.get()
-        self.parsed_urls = set()
 
     def base_params(self):
-        return {
-            'currency': self.currency,
+        params = {
             'key': KEY,
             'locale': LOCALE,
         }
+        if bool(self.currency):
+            params['currency'] = self.currency
+        return params
 
     @classmethod
     def create_url(cls, base, params=None):
@@ -77,7 +95,6 @@ class AirbnbSpider(scrapy.Spider):
             'items_per_grid': '18',
             'luxury_pre_launch': 'false',
             'metadata_only': 'false',
-            'query': self.city,
             'query_understanding_enabled': 'true',
             'refinement_paths%5B%5D': '%2Fhomes',
             'search_type': 'FILTER_CHANGE',
@@ -87,10 +104,8 @@ class AirbnbSpider(scrapy.Spider):
             'timezone_offset': '-240',
             'version': '1.5.6'
         })
-        if self.price_lb > 0:
-            params['price_min'] = self.price_lb
-        if self.price_lb > 0 and self.price_ub > self.price_lb:
-            params['price_max'] = self.price_ub
+        params.update(self.filters)
+
         if bool(items_offset):
             params['items_offset'] = items_offset
         if bool(section_offset):
@@ -141,13 +156,7 @@ class AirbnbSpider(scrapy.Spider):
             response: Json object from explore_tabs
         Returns:
         """
-        if response.url in self.parsed_urls:
-            self.logger.debug(f'Skipping duplicate parsing explore: \n{response.url}')
-            yield None
-            return
-
         self.logger.debug(f'Parsing explore: \n{response.url}')
-        self.parsed_urls.add(response.url)
         
         # Fetch and Write the response data
         data = json.loads(response.body)
@@ -251,7 +260,7 @@ class AirbnbSpider(scrapy.Spider):
             )
             calendar_meta = {
                 'listing_id': listing_id,
-                'currency': self.currency,
+                'currency': listing_dict['currency'],
                 'time_zone': time_zone
             }
             self.logger.debug(f'Fetching listing "{listing_id}" calendar: {calendar_url}')

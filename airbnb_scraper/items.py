@@ -420,6 +420,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
         an available period, consider the unavailable period
         as blocked (not booked).
         """
+        # TODO: implement
         pass
 
 
