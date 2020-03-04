@@ -186,6 +186,8 @@ class AirbnbListing(AirbnbItem):
 
     @classmethod
     def create_id(cls, listing_id=''):
+        if not bool(listing_id):
+            raise ValueError('Missing ID parameter')
         return listing_id
 
     def update_id(self):
@@ -223,21 +225,25 @@ class AirbnbListingCalendarMonth(AirbnbItem):
     listing_id = scrapy.Field()
     time_zone = scrapy.Field()
     currency = scrapy.Field()
-    earliest_data_date = scrapy.Field(serializer=datetime_serializer)
     month = scrapy.Field()
     year = scrapy.Field()
     start_date = scrapy.Field(serializer=naive_datetime_serializer)
+    data_start_date = scrapy.Field(serializer=naive_datetime_serializer)
     end_date = scrapy.Field(serializer=naive_datetime_serializer)
     availability = scrapy.Field()
     revenue = scrapy.Field()
+    partial_revenue = scrapy.Field()
     future_revenue = scrapy.Field()
     average_price = scrapy.Field()
     median_price = scrapy.Field()
     lowest_price = scrapy.Field()
     highest_price = scrapy.Field()
+    errors = scrapy.Field(serializer=lambda a: [str(x) for x in list(a)])
 
     @classmethod
     def create_id(cls, listing_id='', date='', tzinfo='UTC'):
+        if not bool(listing_id) or not bool(date):
+            raise ValueError('Missing ID parameter')
         start_date = arrow.get(date, tzinfo=tzinfo).floor('month')
         subid = start_date.format('YYYY-MM')
         return f'{listing_id}/{cls._item_type}/{subid}'
@@ -249,33 +255,33 @@ class AirbnbListingCalendarMonth(AirbnbItem):
             tzinfo=self.get('time_zone')
         )
 
-    def update_with_days(self, days):
+    def update_with_days(self, days, now=None):
         time_zone = self['time_zone']
-        now_local = arrow.utcnow().to(time_zone)
+        now_local = (now or arrow.get()).to(time_zone)
         today_local = now_local.floor('day')
         date = None
-        earliest_data_date = None
+        data_start_date = None
 
         booked_days = 0
         available_future_days = 0
         future_days = 0
         total_days = 0
         is_data_complete = True
-        has_price_error = False
+        errors = []
         prices = []
         revenue = 0.0
         future_revenue = 0.0
 
         for day in days:
-            if not bool(earliest_data_date):
-                earliest_data_date = day['creation_date']
-                self['earliest_data_date'] = earliest_data_date
-
             is_past = day.is_past
             is_available = day.is_available
             is_booked = day.is_booked
 
-            if is_data_complete and not day.is_data_complete:
+            if day.is_data_complete:
+                if not bool(data_start_date):
+                    data_start_date = day.get('date')
+                    self['data_start_date'] = data_start_date
+            else:
                 is_data_complete = False
 
             # Price
@@ -289,12 +295,12 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                         future_revenue += price
             else:
                 # Handle missing price
-                has_price_error = True
+                errors.append(f'Price missing at {day.date.format("YYYY-MM-DD")}')
 
             total_days += 1
             if not is_past:
                 future_days += 1
-                if bool(is_available):
+                if is_available:
                     available_future_days += 1
 
         if future_days > 0:
@@ -304,7 +310,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
         
         self['availability'] = availability
 
-        if not has_price_error:
+        if not bool(errors):
             prices.sort()
 
             if is_data_complete:
@@ -312,6 +318,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
             else:
                 self['revenue'] = None
 
+            self['partial_revenue'] = revenue
             self['future_revenue'] = future_revenue
             self['average_price'] = round(sum(prices) / float(total_days) * 100.0) / 100.0
             self['median_price'] = prices[int(total_days / 2)]
@@ -319,11 +326,14 @@ class AirbnbListingCalendarMonth(AirbnbItem):
             self['highest_price'] = prices[-1]
         else:
             self['revenue'] = None
+            self['partial_revenue'] = None
             self['future_revenue'] = None
             self['average_price'] = None
             self['median_price'] = None
             self['lowest_price'] = None
             self['highest_price'] = None
+        
+        self['errors'] = errors
 
 
 class AirbnbListingCalendarDay(AirbnbItem):
@@ -335,16 +345,19 @@ class AirbnbListingCalendarDay(AirbnbItem):
 
     listing_id = scrapy.Field()
     time_zone = scrapy.Field()
+    price = scrapy.Field()
     currency = scrapy.Field()
     date = scrapy.Field(serializer=naive_datetime_serializer)
     last_available_seen_date = scrapy.Field(serializer=datetime_serializer)
     first_unavailable_seen_date = scrapy.Field(serializer=datetime_serializer)
     available = scrapy.Field()
     booking_date = scrapy.Field(serializer=datetime_serializer)
-    price = scrapy.Field()
+    blocked = scrapy.Field()
 
     @classmethod
     def create_id(cls, listing_id='', date='', tzinfo='UTC'):
+        if not bool(listing_id) or not bool(date):
+            raise ValueError('Missing ID parameter')
         subid = arrow.get(date, tzinfo=tzinfo).format('YYYY-MM-DD')
         return f'{listing_id}/{cls._item_type}/{subid}'
 
@@ -361,38 +374,53 @@ class AirbnbListingCalendarDay(AirbnbItem):
 
     @property
     def is_booked(self):
-        return bool(self.get('booking_date'))
+        if bool(self.get('blocked')):
+            return False
+        if self.is_past:
+            return bool(self.get('booking_date'))
+        else:
+            return not self.is_available
 
     @property
     def is_data_complete(self):
-        av_date = self.get('last_available_seen_date')
-        unav_date = self.get('first_unavailable_seen_date')
-        return bool(av_date) and bool(unav_date)
+        if not self.is_past:
+            return True
+        if bool(self.get('last_available_seen_date')):
+            return True
+        return False
 
     @property
     def local_date(self):
-        return arrow.get(self.get('date'), tzinfo=self['time_zone'])
+        return arrow.get(self.get('date'), tzinfo=self['time_zone']).replace(tzinfo=self['time_zone'])
 
     @property
     def is_past(self):
-        return arrow.get(self.get('update_date')) < self.local_date.ceil('day').shift(hours=-2)
+        return arrow.get(self.get('update_date')) > self.local_date.ceil('day').shift(hours=-2)
 
-    def update_inferred(self):
-        now = arrow.get()
+    def update_inferred(self, now=None):
+        """Updates dependent properties."""
+        now = now or arrow.get()
         if self.is_available:
             self['last_available_seen_date'] = now
             self['first_unavailable_seen_date'] = None
             self['booking_date'] = None
-        elif not self.is_past:
-            # Only check availability in the future
-            if self.get('first_unavailable_seen_date') is None:
-                self['first_unavailable_seen_date'] = now
+        elif self.get('first_unavailable_seen_date') is None:
+            self['first_unavailable_seen_date'] = now
         
         av_date = self.get('last_available_seen_date')
         unav_date = self.get('first_unavailable_seen_date')
-        if bool(av_date) and bool(unav_date):
+        if bool(av_date) and bool(unav_date) and av_date < unav_date:
             # Estimate booking date
             self['booking_date'] = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
+
+    @classmethod
+    def update_group(cls, days):
+        """
+        If there is a large unavailable period following
+        an available period, consider the unavailable period
+        as blocked (not booked).
+        """
+        pass
 
 
 class MongoDBItemExporter(BaseItemExporter):

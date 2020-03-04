@@ -42,7 +42,7 @@ class AirbnbSpider(scrapy.Spider):
     You don't have to override __init__ each time and can simply use self.parameter (See https://bit.ly/2Wxbkd9),
     but I find this way much more readable.
     """
-    def __init__(self, city='',price_lb='', price_ub='', currency='', months=AVAILABILITY_MONTHS, *args, **kwargs):
+    def __init__(self, city='', price_lb='', price_ub='', currency='', months=AVAILABILITY_MONTHS, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.city = city
         self.price_lb = int(math.ceil(float(price_lb))) if bool(price_lb) else 0
@@ -347,19 +347,27 @@ class AirbnbSpider(scrapy.Spider):
         time_zone = response.meta['time_zone'] or 'UTC'
         currency = response.meta['currency']
 
+        all_months = []
+        all_days = []
+        now = arrow.get()
+
         for month_info in month_infos:
             month_num = month_info.get('month')
             year_num = month_info.get('year')
-            date = arrow.get(year_num, month_num, 1).replace(tzinfo=time_zone)
+            start_date = arrow.get(year_num, month_num, 1)
             month_id = AirbnbListingCalendarMonth.create_id(
                 listing_id=listing_id,
-                date=date,
+                date=start_date,
                 tzinfo=time_zone
             )
+            # self.logger.debug(f'Parsing listing "{listing_id}" month {year_num}-{month_num:02} ({month_id})')
             month = AirbnbListingCalendarMonth.load(month_id)
             if month is None:
                 month = AirbnbListingCalendarMonth.create()
-            month['update_date'] = arrow.get()
+            month['update_date'] = now
+
+            month['start_date'] = start_date
+            month['end_date'] = start_date.ceil('month').floor('day')
 
             month['listing_id'] = listing_id
             month['currency'] = currency
@@ -373,7 +381,7 @@ class AirbnbSpider(scrapy.Spider):
                 day = AirbnbListingCalendarDay.load(month_id)
                 if day is None:
                     day = AirbnbListingCalendarDay.create()
-                day['update_date'] = arrow.get()
+                day['update_date'] = now
 
                 day['listing_id'] = listing_id
                 day['currency'] = currency
@@ -387,13 +395,20 @@ class AirbnbSpider(scrapy.Spider):
                 if len(price_strings) == 1:
                     day['price'] = float(price_strings[0])
 
-                day.update_inferred()
+                day.update_inferred(now=now)
                 day.update_id()
                 days.append(day)
+                all_days.append(day)
 
-                yield day
+                # self.logger.debug(f'Day {day[ID_KEY]} (is_complete: {day.is_data_complete}, is_booked: {day.is_booked}): {dict(day)}')
 
-            month.update_with_days(days)
+            month.update_with_days(days, now=now)
             month.update_id()
+            all_months.append(month)
 
+        AirbnbListingCalendarDay.update_group(all_days)
+
+        for month in all_months:
             yield month
+        for day in all_days:
+            yield day
