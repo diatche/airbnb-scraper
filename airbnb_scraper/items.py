@@ -244,9 +244,9 @@ class AirbnbListingCalendarMonth(AirbnbItem):
 
     def update_id(self):
         self[ID_KEY] = type(self).create_id(
-            listing_id=self['listing_id'],
-            date=self['date'],
-            tzinfo=self['time_zone']
+            listing_id=self.get('listing_id'),
+            date=self.get('start_date'),
+            tzinfo=self.get('time_zone')
         )
 
     def update_with_days(self, days):
@@ -271,7 +271,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                 earliest_data_date = day['creation_date']
                 self['earliest_data_date'] = earliest_data_date
 
-            is_future = day.is_future
+            is_past = day.is_past
             is_available = day.is_available
             is_booked = day.is_booked
 
@@ -283,16 +283,16 @@ class AirbnbListingCalendarMonth(AirbnbItem):
             if bool(price):
                 prices.append(price)
                 if is_booked:
-                    if is_future:
-                        future_revenue += price
+                    if is_past:
+                        revenue += prices
                     else:
-                        revenue += price
+                        future_revenue += price
             else:
                 # Handle missing price
                 has_price_error = True
 
             total_days += 1
-            if is_future:
+            if not is_past:
                 future_days += 1
                 if bool(is_available):
                     available_future_days += 1
@@ -313,7 +313,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                 self['revenue'] = None
 
             self['future_revenue'] = future_revenue
-            self['average_price'] = round(sum(prices) / float(total_days) * 10.0) / 10.0
+            self['average_price'] = round(sum(prices) / float(total_days) * 100.0) / 100.0
             self['median_price'] = prices[int(total_days / 2)]
             self['lowest_price'] = prices[0]
             self['highest_price'] = prices[-1]

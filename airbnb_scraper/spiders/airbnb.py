@@ -239,10 +239,10 @@ class AirbnbSpider(scrapy.Spider):
                 tzinfo=time_zone
             )
             current_month = AirbnbListingCalendarMonth.load(current_month_id)
-            if current_month is not None and not current_month.is_stale:
-                # No need to refetch calendar
-                self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
-                continue
+            # if current_month is not None and not current_month.is_stale:
+            #     # No need to refetch calendar
+            #     self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
+            #     continue
 
             # Fetch listing calendar
             calendar_url = self.create_calendar_url(
@@ -255,26 +255,26 @@ class AirbnbSpider(scrapy.Spider):
                 'time_zone': time_zone
             }
             self.logger.debug(f'Fetching listing "{listing_id}" calendar: {calendar_url}')
-            yield SplashRequest(
+            yield scrapy.Request(
                 url=calendar_url,
                 callback=self.parse_calendar,
                 meta=calendar_meta,
-                args={'wait': REQUEST_WAIT}
+                dont_filter=True
             )
         
-        # # After scraping entire listings page, check if more pages are available
-        # pagination_metadata = data.get('explore_tabs')[0].get('pagination_metadata')
-        # if pagination_metadata.get('has_next_page'):
-        #     # If there is a next page, update url and scrape from next page
-        #     url = self.create_explore_url(
-        #         items_offset=pagination_metadata.get('items_offset'),
-        #         section_offset=pagination_metadata.get('section_offset'),
-        #     )
-        #     self.logger.debug(f'Continuing explore: \n{url}')
-        #     yield scrapy.Request(
-        #         url=url,
-        #         callback=self.parse_explore
-        #     )
+        # After scraping entire listings page, check if more pages are available
+        pagination_metadata = data.get('explore_tabs')[0].get('pagination_metadata')
+        if pagination_metadata.get('has_next_page'):
+            # If there is a next page, update url and scrape from next page
+            url = self.create_explore_url(
+                items_offset=pagination_metadata.get('items_offset'),
+                section_offset=pagination_metadata.get('section_offset'),
+            )
+            self.logger.debug(f'Continuing explore: \n{url}')
+            yield scrapy.Request(
+                url=url,
+                callback=self.parse_explore
+            )
 
     # def parse_listing_details(self, response):
     #     """
@@ -348,9 +348,9 @@ class AirbnbSpider(scrapy.Spider):
         currency = response.meta['currency']
 
         for month_info in month_infos:
-            month = month_info.get('month')
-            year = month_info.get('year')
-            date = arrow.get(year, month, 1).replace(tzinfo=time_zone)
+            month_num = month_info.get('month')
+            year_num = month_info.get('year')
+            date = arrow.get(year_num, month_num, 1).replace(tzinfo=time_zone)
             month_id = AirbnbListingCalendarMonth.create_id(
                 listing_id=listing_id,
                 date=date,
@@ -364,11 +364,11 @@ class AirbnbSpider(scrapy.Spider):
             month['listing_id'] = listing_id
             month['currency'] = currency
             month['time_zone'] = time_zone
-            month['month'] = month
-            month['year'] = year
+            month['month'] = month_num
+            month['year'] = year_num
             
             days = []
-            day_infos = month.get('days')
+            day_infos = month_info.get('days')
             for day_info in day_infos:
                 day = AirbnbListingCalendarDay.load(month_id)
                 if day is None:
@@ -381,6 +381,12 @@ class AirbnbSpider(scrapy.Spider):
 
                 date = arrow.get(day_info.get('date')).replace(tzinfo=time_zone)
                 day['date'] = date
+                day['available'] = day_info.get('available')
+
+                price_strings = re.findall(r'\d+', day_info.get('price').get('local_price_formatted') or '')
+                if len(price_strings) == 1:
+                    day['price'] = float(price_strings[0])
+
                 day.update_inferred()
                 day.update_id()
                 days.append(day)

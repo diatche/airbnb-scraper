@@ -46,7 +46,7 @@ class AirbnbMongoPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        spider.logger.debug(f'Pipeline saving item to MongoDB')
+        spider.logger.debug(f'Pipeline saving item {item} to MongoDB')
         if not isinstance(item, AirbnbItem):
             raise TypeError(f'Unknown item type: {type(item).__name__}')
         item.save()
