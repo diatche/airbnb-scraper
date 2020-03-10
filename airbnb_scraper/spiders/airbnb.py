@@ -8,6 +8,7 @@ import scrapy
 import math
 import arrow
 import dateutil
+import urllib
 from scrapy_splash import SplashRequest
 from scrapy.exceptions import CloseSpider
 from airbnb_scraper.items import AirbnbListing, AirbnbListingCalendarMonth, AirbnbListingCalendarDay, ID_KEY
@@ -22,6 +23,11 @@ LISTING_BASE_URL = 'https://www.airbnb.com/rooms/'
 CALENDAR_BASE_URL = 'https://www.airbnb.com/api/v2/homes_pdp_availability_calendar'
 KEY = 'd306zoyjsyarp7ifhu67rjxn52tv0t20'
 LOCALE = 'en'
+
+FILTER_URL_KEY_MAP = {
+    'room_type': 'room_types[]',
+    'room_types': 'room_types[]',
+}
 
 
 # ********************************************************************************************
@@ -80,7 +86,8 @@ class AirbnbSpider(scrapy.Spider):
     def create_url(cls, base, params=None):
         if not bool(params):
             return base
-        return base + '?' + '&'.join([f'{k}={v}' for k, v in params.items()])
+        query = urllib.parse.urlencode({str(k): str(v) for k, v in params.items()})
+        return base + '?' + query
 
     def create_explore_url(self, items_offset=0, section_offset=0):
         params = self.base_params()
@@ -103,7 +110,10 @@ class AirbnbSpider(scrapy.Spider):
             'timezone_offset': '-240',
             'version': '1.5.6'
         })
-        params.update(self.filters)
+        for key, value in self.filters.items():
+            if key in FILTER_URL_KEY_MAP:
+                key = FILTER_URL_KEY_MAP[key]
+            params[key] = value
 
         if bool(items_offset):
             params['items_offset'] = items_offset
@@ -410,7 +420,7 @@ class AirbnbSpider(scrapy.Spider):
 
                 # self.logger.debug(f'Day {day[ID_KEY]} (is_complete: {day.is_data_complete}, is_booked: {day.is_booked}): {dict(day)}')
 
-            month.update_with_days(days, now=now)
+            month.update_with_days(days)
             month.update_id()
             all_months.append(month)
 
