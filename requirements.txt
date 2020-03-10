@@ -1,0 +1,5 @@
+arrow==0.15.*
+pymongo==3.10.*
+scrapy==2.0.*
+scrapy-splash==0.7.*
+timezonefinder==4.2.*
