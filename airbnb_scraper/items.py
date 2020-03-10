@@ -70,6 +70,12 @@ class AirbnbItem(scrapy.Item):
 
     @classmethod
     def get_collection(cls):
+        """
+        Returns a MongoDB collection. Note that
+        objects returned by this collection are
+        not instances of the item. Use `with_db_entry()`
+        to instantiate.
+        """
         from airbnb_scraper.db import AirbnbMongoDB
         client = AirbnbMongoDB.shared()
         return client.db[cls._collection_name]
@@ -96,7 +102,7 @@ class AirbnbItem(scrapy.Item):
                     v = arrow.get(v, tzinfo='UTC')
                 values[key] = v
         assert bool(values[ID_KEY]), 'Databse entry is missing an ID'
-        return cls(_persisted_values=values, **values)
+        return cls(_persisted_values=data, **values)
     
     @classmethod
     def save_many(cls,  items):
@@ -104,6 +110,15 @@ class AirbnbItem(scrapy.Item):
         # https://api.mongodb.com/python/current/tutorial.html#bulk-inserts
         for item in items:
             item.save()
+    
+    @classmethod
+    def find(cls, query):
+        col = cls.get_collection()
+        docs = col.find(query)
+        return map(cls.with_db_entry, docs)
+
+    def get_id(self):
+        return self.get(ID_KEY)
 
     def get_date_value(self, key, default=None):
         x = self.get(key)
@@ -122,6 +137,9 @@ class AirbnbItem(scrapy.Item):
 
     def save(self):
         doc = self.serialize()
+        changes = self.get_changes(_serialized_values=doc)
+        if not bool(changes):
+            return
         collection = type(self).get_collection()
         collection.update_one(
             {ID_KEY: self[ID_KEY]},
@@ -130,14 +148,18 @@ class AirbnbItem(scrapy.Item):
         )
         self._persisted_values = doc
 
-    def get_changes(self):
+    def get_changes(self, _serialized_values=None):
         olds = self._persisted_values
-        news = self.serialize()
+        news = _serialized_values or self.serialize()
         changes = {}
         for key in self.keys():
             old = olds[key] if key in olds else None
             new = news[key] if key in news else None
-            if new != old:
+            if isinstance(old, datetime) and isinstance(new, datetime):
+                changed = arrow.get(new) != arrow.get(old)
+            else:
+                changed = new != old
+            if changed:
                 changes[key] = {
                     'new' : new,
                     'old': old
