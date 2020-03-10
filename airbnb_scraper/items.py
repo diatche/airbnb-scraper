@@ -19,7 +19,7 @@ MISSING_VALUE_SENTINEL = object()
 
 
 def datetime_serializer(x):
-    return arrow.get(x).replace(tzinfo='UTC').datetime if bool(x) else None
+    return arrow.get(x).datetime if bool(x) else None
 
 def naive_datetime_serializer(x):
     return arrow.get(x).replace(tzinfo='UTC').datetime if bool(x) else None
@@ -432,7 +432,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
         now = self.get_date_value('update_date')
 
         self['booking_date'] = None
-        
+
         if self.is_available:
             self['last_available_seen_date'] = now
             self['first_unavailable_seen_date'] = None
