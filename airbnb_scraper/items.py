@@ -396,6 +396,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
     # source_hash = scrapy.Field()
 
     listing_id = scrapy.Field()
+    month_id = scrapy.Field()
     time_zone = scrapy.Field()
     price = scrapy.Field()
     currency = scrapy.Field()
@@ -453,6 +454,11 @@ class AirbnbListingCalendarDay(AirbnbItem):
         """Updates dependent properties."""
         now = self.get_date_value('update_date')
 
+        self['month_id'] = AirbnbListingCalendarMonth.create_id(
+            listing_id=self.get('listing_id'),
+            date=self.get_date_value('date'),
+            tzinfo=self.get('time_zone')
+        )
         self['booking_date'] = None
 
         if self.is_available:
