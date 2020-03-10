@@ -18,10 +18,10 @@ STALE_INTERVAL = 60.0
 MISSING_VALUE_SENTINEL = object()
 
 
-def datetime_serializer(x):
+def date_serializer(x):
     return arrow.get(x).datetime if bool(x) else None
 
-def naive_datetime_serializer(x):
+def naive_date_serializer(x):
     return arrow.get(x).replace(tzinfo='UTC').datetime if bool(x) else None
 
 def remove_unicode(value):
@@ -35,8 +35,8 @@ class AirbnbItem(scrapy.Item):
 
     _id = scrapy.Field()
     item_type = scrapy.Field()
-    creation_date = scrapy.Field(serializer=datetime_serializer)
-    update_date = scrapy.Field(serializer=datetime_serializer)
+    creation_date = scrapy.Field(serializer=date_serializer)
+    update_date = scrapy.Field(serializer=date_serializer)
     version = scrapy.Field()
     # hash_value = scrapy.Field()
     # _changes = scrapy.Field()
@@ -230,8 +230,8 @@ class AirbnbListing(AirbnbItem):
 #     time_zone = scrapy.Field()
 #     currency = scrapy.Field()
 #     months = scrapy.Field()
-#     start_date = scrapy.Field(serializer=naive_datetime_serializer)
-#     end_date = scrapy.Field(serializer=naive_datetime_serializer)
+#     start_date = scrapy.Field(serializer=naive_date_serializer)
+#     end_date = scrapy.Field(serializer=naive_date_serializer)
 #     # dates = scrapy.Field()
 #     availability = scrapy.Field()
 #     prices = scrapy.Field()
@@ -256,9 +256,9 @@ class AirbnbListingCalendarMonth(AirbnbItem):
     currency = scrapy.Field()
     month = scrapy.Field()
     year = scrapy.Field()
-    start_date = scrapy.Field(serializer=naive_datetime_serializer)
-    data_start_date = scrapy.Field(serializer=naive_datetime_serializer)
-    end_date = scrapy.Field(serializer=naive_datetime_serializer)
+    start_date = scrapy.Field(serializer=naive_date_serializer)
+    data_start_date = scrapy.Field(serializer=naive_date_serializer)
+    end_date = scrapy.Field(serializer=naive_date_serializer)
     availability = scrapy.Field()
     revenue = scrapy.Field()
     partial_revenue = scrapy.Field()
@@ -377,11 +377,11 @@ class AirbnbListingCalendarDay(AirbnbItem):
     time_zone = scrapy.Field()
     price = scrapy.Field()
     currency = scrapy.Field()
-    date = scrapy.Field(serializer=naive_datetime_serializer)
-    last_available_seen_date = scrapy.Field(serializer=datetime_serializer)
-    first_unavailable_seen_date = scrapy.Field(serializer=datetime_serializer)
+    date = scrapy.Field(serializer=naive_date_serializer)
+    last_available_seen_date = scrapy.Field(serializer=date_serializer)
+    first_unavailable_seen_date = scrapy.Field(serializer=date_serializer)
     available = scrapy.Field()
-    booking_date = scrapy.Field(serializer=datetime_serializer)
+    booking_date = scrapy.Field(serializer=date_serializer)
     blocked = scrapy.Field()
 
     @classmethod
