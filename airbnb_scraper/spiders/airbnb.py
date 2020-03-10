@@ -2,7 +2,6 @@
 import json
 import collections
 import re
-import numpy as np
 import logging
 import sys
 import scrapy
@@ -404,7 +403,7 @@ class AirbnbSpider(scrapy.Spider):
                 if len(price_strings) == 1:
                     day['price'] = float(price_strings[0])
 
-                day.update_inferred(now=now)
+                day.update_inferred()
                 day.update_id()
                 days.append(day)
                 all_days.append(day)

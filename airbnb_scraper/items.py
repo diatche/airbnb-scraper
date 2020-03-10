@@ -11,6 +11,7 @@ import scrapy
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
 from scrapy.exporters import BaseItemExporter
 from airbnb_scraper.settings import PROJECT_VERSION
+from datetime import datetime
 
 ID_KEY = '_id'
 STALE_INTERVAL = 60.0
@@ -40,11 +41,12 @@ class AirbnbItem(scrapy.Item):
     # hash_value = scrapy.Field()
     # _changes = scrapy.Field()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, _persisted_values=None, **kwargs):
         super().__init__(*args, **kwargs)
         self['item_type'] = type(self)._item_type or self.get('item_type', str(type(self).__name__))
         self['version'] = PROJECT_VERSION
         # self['hash_value'] = ''
+        self._persisted_values = _persisted_values or {}
 
     def __repr__(self):
         type_str = type(self)._item_type or type(self).__name__
@@ -54,7 +56,7 @@ class AirbnbItem(scrapy.Item):
     @property
     def is_stale(self):
         now = arrow.get()
-        update_date = self.get('update_date', now)
+        update_date = self.get_date_value('update_date', now)
         time_passed = now - update_date
         return time_passed > STALE_INTERVAL
 
@@ -62,8 +64,8 @@ class AirbnbItem(scrapy.Item):
     def create(cls, *args, **kwargs):
         item = cls(*args, **kwargs)
         date = arrow.get()
-        item['creation_date'] = item.get('creation_date', date)
-        item['update_date'] = item.get('update_date', date)
+        item['creation_date'] = item.get_date_value('creation_date', date)
+        item['update_date'] = item.get_date_value('update_date', date)
         return item
 
     @classmethod
@@ -78,17 +80,23 @@ class AirbnbItem(scrapy.Item):
         if len(matches) == 0:
             return None
         elif len(matches) == 1:
-            match = matches[0]
-            assert match[ID_KEY] == id
-            # Get only the current values and filter
-            # out legacy keys
-            values = {}
-            for key in cls.fields:
-                if key in match:
-                    values[key] = match[key]
-            return cls(**values)
+            return cls.with_db_entry(matches[0])
         else:
             raise Exception(f'Multiple objects found for id {id}')
+
+    @classmethod
+    def with_db_entry(cls, data):
+        # Get only the current values and filter
+        # out legacy keys
+        values = {}
+        for key in cls.fields:
+            if key in data:
+                v = data[key]
+                if isinstance(v, datetime):
+                    v = arrow.get(v, tzinfo='UTC')
+                values[key] = v
+        assert bool(values[ID_KEY]), 'Databse entry is missing an ID'
+        return cls(_persisted_values=values, **values)
     
     @classmethod
     def save_many(cls,  items):
@@ -96,6 +104,12 @@ class AirbnbItem(scrapy.Item):
         # https://api.mongodb.com/python/current/tutorial.html#bulk-inserts
         for item in items:
             item.save()
+
+    def get_date_value(self, key, default=None):
+        x = self.get(key)
+        if not bool(x):
+            return default
+        return arrow.get(x)
 
     def serialize(self):
         return MongoDBItemExporter().export_item(self)
@@ -114,10 +128,25 @@ class AirbnbItem(scrapy.Item):
             {'$set': doc},
             upsert=True
         )
+        self._persisted_values = doc
+
+    def get_changes(self):
+        olds = self._persisted_values
+        news = self.serialize()
+        changes = {}
+        for key in self.keys():
+            old = olds[key] if key in olds else None
+            new = news[key] if key in news else None
+            if new != old:
+                changes[key] = {
+                    'new' : new,
+                    'old': old
+                }
+        return changes
 
     # def update_hash(self, id_sensitive=False):
     #     d = dict(self)
-    #     del d['creation_date']
+    #     del d.get_date_value('creation_date')
     #     del d['version']
     #     if 'hash_value' in d:
     #         del d['hash_value']
@@ -251,13 +280,14 @@ class AirbnbListingCalendarMonth(AirbnbItem):
     def update_id(self):
         self[ID_KEY] = type(self).create_id(
             listing_id=self.get('listing_id'),
-            date=self.get('start_date'),
+            date=self.get_date_value('start_date'),
             tzinfo=self.get('time_zone')
         )
 
-    def update_with_days(self, days, now=None):
+    def update_with_days(self, days):
         time_zone = self['time_zone']
-        now_local = (now or arrow.get()).to(time_zone)
+        now = self.get_date_value('update_date')
+        now_local = now.to(time_zone)
         today_local = now_local.floor('day')
         date = None
         data_start_date = None
@@ -279,7 +309,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
 
             if day.is_data_complete:
                 if not bool(data_start_date):
-                    data_start_date = day.get('date')
+                    data_start_date = day.get_date_value('date')
                     self['data_start_date'] = data_start_date
             else:
                 is_data_complete = False
@@ -364,7 +394,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
     def update_id(self):
         self[ID_KEY] = type(self).create_id(
             listing_id=self['listing_id'],
-            date=self['date'],
+            date=self.get_date_value('date'),
             tzinfo=self['time_zone']
         )
 
@@ -377,7 +407,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
         if bool(self.get('blocked')):
             return False
         if self.is_past:
-            return bool(self.get('booking_date'))
+            return bool(self.get_date_value('booking_date'))
         else:
             return not self.is_available
 
@@ -385,33 +415,36 @@ class AirbnbListingCalendarDay(AirbnbItem):
     def is_data_complete(self):
         if not self.is_past:
             return True
-        if bool(self.get('last_available_seen_date')):
+        if bool(self.get_date_value('last_available_seen_date')):
             return True
         return False
 
     @property
     def local_date(self):
-        return arrow.get(self.get('date'), tzinfo=self['time_zone']).replace(tzinfo=self['time_zone'])
+        return arrow.get(self.get_date_value('date'), tzinfo=self['time_zone']).replace(tzinfo=self['time_zone'])
 
     @property
     def is_past(self):
-        return arrow.get(self.get('update_date')) > self.local_date.ceil('day').shift(hours=-2)
+        return arrow.get(self.get_date_value('update_date')) > self.local_date.ceil('day').shift(hours=-2)
 
-    def update_inferred(self, now=None):
+    def update_inferred(self):
         """Updates dependent properties."""
-        now = now or arrow.get()
+        now = self.get_date_value('update_date')
+
+        self['booking_date'] = None
+        
         if self.is_available:
             self['last_available_seen_date'] = now
             self['first_unavailable_seen_date'] = None
-            self['booking_date'] = None
-        elif self.get('first_unavailable_seen_date') is None:
+        elif self.get_date_value('first_unavailable_seen_date') is None:
             self['first_unavailable_seen_date'] = now
         
-        av_date = self.get('last_available_seen_date')
-        unav_date = self.get('first_unavailable_seen_date')
-        if bool(av_date) and bool(unav_date) and av_date < unav_date:
-            # Estimate booking date
-            self['booking_date'] = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
+        if not self.is_past:
+            av_date = self.get_date_value('last_available_seen_date')
+            unav_date = self.get_date_value('first_unavailable_seen_date')
+            if bool(av_date) and bool(unav_date) and av_date < unav_date:
+                # Estimate booking date
+                self['booking_date'] = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
 
     @classmethod
     def update_group(cls, days):
