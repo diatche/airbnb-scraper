@@ -247,10 +247,10 @@ class AirbnbSpider(scrapy.Spider):
                 tzinfo=time_zone
             )
             current_month = AirbnbListingCalendarMonth.load(current_month_id)
-            # if current_month is not None and not current_month.is_stale:
-            #     # No need to refetch calendar
-            #     self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
-            #     continue
+            if current_month is not None and not current_month.is_stale:
+                # No need to refetch calendar
+                self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
+                continue
 
             # Fetch listing calendar
             calendar_url = self.create_calendar_url(

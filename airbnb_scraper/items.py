@@ -7,6 +7,7 @@
 
 import json
 import arrow
+import math
 import scrapy
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
 from scrapy.exporters import BaseItemExporter
@@ -14,7 +15,6 @@ from airbnb_scraper.settings import PROJECT_VERSION
 from datetime import datetime
 
 ID_KEY = '_id'
-STALE_INTERVAL = 60.0
 MISSING_VALUE_SENTINEL = object()
 
 
@@ -32,6 +32,7 @@ class AirbnbItem(scrapy.Item):
 
     _item_type = ''
     _collection_name = ''
+    _stale_interval = math.inf
 
     _id = scrapy.Field()
     item_type = scrapy.Field()
@@ -57,8 +58,8 @@ class AirbnbItem(scrapy.Item):
     def is_stale(self):
         now = arrow.get()
         update_date = self.get_date_value('update_date', now)
-        time_passed = now - update_date
-        return time_passed > STALE_INTERVAL
+        time_passed = (now - update_date).total_seconds()
+        return time_passed > type(self)._stale_interval
 
     @classmethod
     def create(cls, *args, **kwargs):
@@ -182,6 +183,7 @@ class AirbnbListing(AirbnbItem):
 
     _item_type = 'listing'
     _collection_name = 'listings'
+    _stale_interval = 86400.0
 
     # source_hash = scrapy.Field()
 
@@ -270,6 +272,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
 
     _item_type = 'month'
     _collection_name = 'months'
+    _stale_interval = 3600.0
 
     # source_hash = scrapy.Field()
 
@@ -392,6 +395,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
 
     _item_type = 'day'
     _collection_name = 'days'
+    _stale_interval = 3600.0
 
     # source_hash = scrapy.Field()
 
