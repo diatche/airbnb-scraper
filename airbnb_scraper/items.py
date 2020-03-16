@@ -285,6 +285,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
     data_start_date = scrapy.Field(serializer=naive_date_serializer)
     end_date = scrapy.Field(serializer=naive_date_serializer)
     availability = scrapy.Field()
+    cancellation_rate = scrapy.Field()
     revenue = scrapy.Field()
     partial_revenue = scrapy.Field()
     future_revenue = scrapy.Field()
@@ -317,10 +318,11 @@ class AirbnbListingCalendarMonth(AirbnbItem):
         date = None
         data_start_date = None
 
-        booked_days = 0
+        booked_or_cancelled_days = 0
         available_future_days = 0
         future_days = 0
         total_days = 0
+        cancelled_days = 0
         is_data_complete = True
         errors = []
         prices = []
@@ -331,6 +333,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
             is_past = day.is_past
             is_available = day.is_available
             is_booked = day.is_booked
+            is_cancelled = day.is_cancelled
 
             if day.is_data_complete:
                 if not bool(data_start_date):
@@ -358,12 +361,22 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                 if is_available:
                     available_future_days += 1
 
+            if is_cancelled:
+                cancelled_days += 1
+            if is_booked or is_cancelled:
+                booked_or_cancelled_days += 1
+
         if future_days > 0:
             availability = round(float(available_future_days) / float(future_days) * 100.0) / 100.0
         else:
             availability = 0.0
-        
         self['availability'] = availability
+
+        if booked_or_cancelled_days > 0:
+            cancellation_rate = round(float(cancelled_days) / float(booked_or_cancelled_days) * 100.0) / 100.0
+        else:
+            cancellation_rate = 0.0
+        self['cancellation_rate'] = cancellation_rate
 
         if not bool(errors):
             prices.sort()
@@ -436,9 +449,25 @@ class AirbnbListingCalendarDay(AirbnbItem):
         if bool(self.get('blocked')):
             return False
         if self.is_past:
-            return bool(self.get_date_value('booking_date'))
+            booking_date = self.get_date_value('booking_date')
+            if not bool(booking_date):
+                return False
+            cancellation_date = self.get_date_value('cancellation_date')
+            if not bool(cancellation_date):
+                return True
+            return booking_date > cancellation_date
         else:
             return not self.is_available
+
+    @property
+    def is_cancelled(self):
+        cancellation_date = self.get_date_value('cancellation_date')
+        if not bool(cancellation_date):
+            return False
+        booking_date = self.get_date_value('booking_date')
+        if not bool(booking_date):
+            return True
+        return cancellation_date > booking_date
 
     @property
     def is_data_complete(self):
@@ -459,31 +488,31 @@ class AirbnbListingCalendarDay(AirbnbItem):
     def update_inferred(self):
         """Updates dependent properties."""
         now = self.get_date_value('update_date')
+        is_past = self.is_past
 
         self['month_id'] = AirbnbListingCalendarMonth.create_id(
             listing_id=self.get('listing_id'),
             date=self.get_date_value('date'),
             tzinfo=self.get('time_zone')
         )
-        self['booking_date'] = None
 
         if self.is_available:
             self['last_available_seen_date'] = now
-        elif self.get_date_value('first_unavailable_seen_date') is None:
+        elif not is_past and self.get_date_value('first_unavailable_seen_date') is None:
             self['first_unavailable_seen_date'] = now
         
-        if not self.is_past:
-            av_date = self.get_date_value('last_available_seen_date')
-            unav_date = self.get_date_value('first_unavailable_seen_date')
-            if bool(av_date) and bool(unav_date):
-                mid_date = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
-                if av_date < unav_date:
+        av_date = self.get_date_value('last_available_seen_date')
+        unav_date = self.get_date_value('first_unavailable_seen_date')
+        if bool(av_date) and bool(unav_date):
+            mid_date = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
+            if av_date < unav_date:
+                if not self.is_past:
                     # Save estimated booking date
                     self['booking_date'] = mid_date
-                elif self.get('cancellation_date') != mid_date:
-                    # Save cancellation date
-                    self['cancellation_date'] = mid_date
-                    self['cancellations'] = self.get('cancellations', 0) + 1
+            elif self.get('cancellation_date') != mid_date:
+                # Save cancellation date
+                self['cancellation_date'] = mid_date
+                self['cancellations'] = self.get('cancellations', 0) + 1
 
     @classmethod
     def update_group(cls, days):
