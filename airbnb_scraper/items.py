@@ -102,7 +102,7 @@ class AirbnbItem(scrapy.Item):
                 if isinstance(v, datetime):
                     v = arrow.get(v, tzinfo='UTC')
                 values[key] = v
-        assert bool(values[ID_KEY]), 'Databse entry is missing an ID'
+        assert bool(values[ID_KEY]), 'Database entry is missing an ID'
         return cls(_persisted_values=data, **values)
     
     @classmethod
@@ -410,6 +410,8 @@ class AirbnbListingCalendarDay(AirbnbItem):
     available = scrapy.Field()
     booking_date = scrapy.Field(serializer=date_serializer)
     blocked = scrapy.Field()
+    cancellations = scrapy.Field()
+    cancellation_date = scrapy.Field(serializer=date_serializer)
 
     @classmethod
     def create_id(cls, listing_id='', date='', tzinfo='UTC'):
@@ -467,16 +469,21 @@ class AirbnbListingCalendarDay(AirbnbItem):
 
         if self.is_available:
             self['last_available_seen_date'] = now
-            self['first_unavailable_seen_date'] = None
         elif self.get_date_value('first_unavailable_seen_date') is None:
             self['first_unavailable_seen_date'] = now
         
         if not self.is_past:
             av_date = self.get_date_value('last_available_seen_date')
             unav_date = self.get_date_value('first_unavailable_seen_date')
-            if bool(av_date) and bool(unav_date) and av_date < unav_date:
-                # Estimate booking date
-                self['booking_date'] = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
+            if bool(av_date) and bool(unav_date):
+                mid_date = arrow.get(round((av_date.timestamp + unav_date.timestamp) / 2))
+                if av_date < unav_date:
+                    # Save estimated booking date
+                    self['booking_date'] = mid_date
+                elif self.get('cancellation_date') != mid_date:
+                    # Save cancellation date
+                    self['cancellation_date'] = mid_date
+                    self['cancellations'] = self.get('cancellations', 0) + 1
 
     @classmethod
     def update_group(cls, days):
