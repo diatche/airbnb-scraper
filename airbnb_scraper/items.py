@@ -65,9 +65,11 @@ class AirbnbItem(scrapy.Item):
     @classmethod
     def create(cls, *args, **kwargs):
         item = cls(*args, **kwargs)
-        date = arrow.get()
-        item['creation_date'] = item.get_date_value('creation_date', date)
-        item['update_date'] = item.get_date_value('update_date', date)
+        now = arrow.get()
+        if not bool(item.get('creation_date')):
+            item['creation_date'] = now
+        if not bool(item.get('update_date')):
+            item['update_date'] = now
         return item
 
     @classmethod
@@ -127,6 +129,10 @@ class AirbnbItem(scrapy.Item):
             docs = docs.sort(sort)
         return map(cls.with_db_entry, docs)
 
+    @classmethod
+    def get_immutable_keys(cls):
+        return [ID_KEY, 'creation_date']
+
     def get_id(self):
         return self.get(ID_KEY)
 
@@ -135,6 +141,9 @@ class AirbnbItem(scrapy.Item):
         if not bool(x):
             return default
         return arrow.get(x)
+
+    def validate(self):
+        pass
 
     def serialize(self):
         return MongoDBItemExporter().export_item(self)
@@ -145,11 +154,25 @@ class AirbnbItem(scrapy.Item):
         #     doc[key] = value
         # return doc
 
-    def save(self):
+    def save(self, force=False, validate=True):
+        if validate:
+            self.validate()
+
         doc = self.serialize()
-        changes = self.get_changes(_serialized_values=doc)
-        if not bool(changes):
-            return
+
+        changes = {}
+        if not force or validate:
+            changes = self.get_changes(_serialized_values=doc)
+            if not bool(changes):
+                return
+
+        if validate:
+            assert bool(changes)
+            immutable_keys = type(self).get_immutable_keys()
+            for key, change in changes.items():
+                if key in immutable_keys and change['old'] is not None:
+                    raise AttributeError(f'Key is read-only: {key}')
+
         collection = type(self).get_collection()
         collection.update_one(
             {ID_KEY: self[ID_KEY]},
@@ -509,6 +532,20 @@ class AirbnbListingCalendarDay(AirbnbItem):
     @property
     def is_past(self):
         return arrow.get(self.get_date_value('update_date')) > self.local_date.ceil('day').shift(hours=-2)
+
+    def validate(self):
+        creation_date = self.get_date_value('creation_date')
+
+        if creation_date is None:
+            return
+
+        av_date = self.get_date_value('last_available_seen_date')
+        if av_date is not None and av_date < creation_date:
+            raise ValueError(f'Day {self} was available ({av_date}) before created ({creation_date})')
+
+        unav_date = self.get_date_value('first_unavailable_seen_date')
+        if unav_date is not None and unav_date < creation_date:
+            raise ValueError(f'Day {self} was unavailable ({unav_date}) before created ({creation_date})')
 
     def update_inferred(self):
         """Updates dependent properties."""

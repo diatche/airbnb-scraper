@@ -382,6 +382,7 @@ class AirbnbSpider(scrapy.Spider):
             # self.logger.debug(f'Parsing listing "{listing_id}" month {year_num}-{month_num:02} ({month_id})')
             month = AirbnbListingCalendarMonth.load(month_id)
             if month is None:
+                self.logger.debug(f'Creating month: {month_id}')
                 month = AirbnbListingCalendarMonth.create()
             month['update_date'] = now
 
@@ -397,8 +398,15 @@ class AirbnbSpider(scrapy.Spider):
             days = []
             day_infos = month_info.get('days')
             for day_info in day_infos:
-                day = AirbnbListingCalendarDay.load(month_id)
+                date = arrow.get(day_info.get('date')).replace(tzinfo=time_zone)
+                day_id = AirbnbListingCalendarDay.create_id(
+                    listing_id=listing_id,
+                    date=date,
+                    tzinfo=time_zone
+                )
+                day = AirbnbListingCalendarDay.load(day_id)
                 if day is None:
+                    self.logger.debug(f'Creating day: {day_id}')
                     day = AirbnbListingCalendarDay.create()
                 day['update_date'] = now
 
@@ -406,7 +414,6 @@ class AirbnbSpider(scrapy.Spider):
                 day['currency'] = currency
                 day['time_zone'] = time_zone
 
-                date = arrow.get(day_info.get('date')).replace(tzinfo=time_zone)
                 day['date'] = date
                 day['available'] = day_info.get('available')
 
@@ -427,10 +434,11 @@ class AirbnbSpider(scrapy.Spider):
         # Update day group
         AirbnbListingCalendarDay.update_group(all_days)
 
-        # Update months with days
-        for month_and_day in months_and_days:
-            month, day = month_and_day
-            day.update_inferred()
+        # Update days and months with days
+        for month_and_days in months_and_days:
+            month, days = month_and_days
+            for day in days:
+                day.update_inferred()
             month.update_with_days(days)
 
         for month in all_months:
