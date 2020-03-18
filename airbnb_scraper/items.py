@@ -362,7 +362,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                 prices.append(price)
                 if is_booked:
                     if is_past:
-                        revenue += prices
+                        revenue += price
                     else:
                         future_revenue += price
             else:
