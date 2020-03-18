@@ -16,6 +16,7 @@ from datetime import datetime
 
 ID_KEY = '_id'
 MISSING_VALUE_SENTINEL = object()
+BLOCKED_DAYS_FAR_THRESHOLD = 30
 
 
 def date_serializer(x):
@@ -113,9 +114,17 @@ class AirbnbItem(scrapy.Item):
             item.save()
     
     @classmethod
-    def find(cls, query):
+    def find(cls, *query, sort=None):
+        if bool(query):
+            query = query[0]
+        else:
+            query = {}
         col = cls.get_collection()
         docs = col.find(query)
+        if sort:
+            if isinstance(sort, dict):
+                sort = [(k, v) for k, v in sort.items()]
+            docs = docs.sort(sort)
         return map(cls.with_db_entry, docs)
 
     def get_id(self):
@@ -286,6 +295,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
     end_date = scrapy.Field(serializer=naive_date_serializer)
     availability = scrapy.Field()
     cancellation_rate = scrapy.Field()
+    block_rate = scrapy.Field()
     revenue = scrapy.Field()
     partial_revenue = scrapy.Field()
     future_revenue = scrapy.Field()
@@ -323,17 +333,21 @@ class AirbnbListingCalendarMonth(AirbnbItem):
         future_days = 0
         total_days = 0
         cancelled_days = 0
+        blocked_days = 0
         is_data_complete = True
         errors = []
         prices = []
         revenue = 0.0
         future_revenue = 0.0
+        _id = self.get_id()
 
         for day in days:
+            assert day['month_id'] == _id, 'Mismatched day'
             is_past = day.is_past
             is_available = day.is_available
             is_booked = day.is_booked
             is_cancelled = day.is_cancelled
+            is_blocked = day.is_blocked
 
             if day.is_data_complete:
                 if not bool(data_start_date):
@@ -356,6 +370,7 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                 errors.append(f'Price missing at {day.date.format("YYYY-MM-DD")}')
 
             total_days += 1
+            assert total_days <= 31, 'Too many days'
             if not is_past:
                 future_days += 1
                 if is_available:
@@ -365,6 +380,8 @@ class AirbnbListingCalendarMonth(AirbnbItem):
                 cancelled_days += 1
             if is_booked or is_cancelled:
                 booked_or_cancelled_days += 1
+            if is_blocked:
+                blocked_days += 1
 
         if future_days > 0:
             availability = round(float(available_future_days) / float(future_days) * 100.0) / 100.0
@@ -377,6 +394,8 @@ class AirbnbListingCalendarMonth(AirbnbItem):
         else:
             cancellation_rate = 0.0
         self['cancellation_rate'] = cancellation_rate
+
+        self['block_rate'] = round(float(blocked_days) / float(total_days) * 100.0) / 100.0
 
         if not bool(errors):
             prices.sort()
@@ -441,12 +460,16 @@ class AirbnbListingCalendarDay(AirbnbItem):
         )
 
     @property
+    def is_blocked(self):
+        return bool(self.get('blocked'))
+
+    @property
     def is_available(self):
         return bool(self.get('available'))
 
     @property
     def is_booked(self):
-        if bool(self.get('blocked')):
+        if self.is_blocked:
             return False
         if self.is_past:
             booking_date = self.get_date_value('booking_date')
@@ -461,6 +484,8 @@ class AirbnbListingCalendarDay(AirbnbItem):
 
     @property
     def is_cancelled(self):
+        if self.is_blocked:
+            return False
         cancellation_date = self.get_date_value('cancellation_date')
         if not bool(cancellation_date):
             return False
@@ -498,6 +523,7 @@ class AirbnbListingCalendarDay(AirbnbItem):
 
         if self.is_available:
             self['last_available_seen_date'] = now
+            self['blocked'] = False
         elif not is_past and self.get_date_value('first_unavailable_seen_date') is None:
             self['first_unavailable_seen_date'] = now
         
@@ -517,12 +543,30 @@ class AirbnbListingCalendarDay(AirbnbItem):
     @classmethod
     def update_group(cls, days):
         """
-        If there is a large unavailable period following
-        an available period, consider the unavailable period
-        as blocked (not booked).
+        If there is a large unavailable period at the
+        end of the day set, consider the unavailable period
+        as blocked.
+
+        If a blocked day is found at the end of the day set,
+        the unavailable period can be of any size.
         """
-        # TODO: implement
-        pass
+        unavailable_tail_days = []
+        found_blocked = False
+        if not isinstance(days, list):
+            days = list(days)
+        for day in reversed(days):
+            if not found_blocked and day.is_blocked:
+                found_blocked = True
+            if day.is_available:
+                break
+            unavailable_tail_days.append(day)
+        
+        if found_blocked or len(unavailable_tail_days) >= BLOCKED_DAYS_FAR_THRESHOLD:
+            # consider the unavailable period as blocked
+            for day in unavailable_tail_days:
+                day['blocked'] = True
+        
+        return unavailable_tail_days
 
 
 class MongoDBItemExporter(BaseItemExporter):

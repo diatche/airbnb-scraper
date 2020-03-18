@@ -367,6 +367,7 @@ class AirbnbSpider(scrapy.Spider):
 
         all_months = []
         all_days = []
+        months_and_days = []
         now = arrow.get()
 
         for month_info in month_infos:
@@ -413,18 +414,24 @@ class AirbnbSpider(scrapy.Spider):
                 if len(price_strings) == 1:
                     day['price'] = float(price_strings[0])
 
-                day.update_inferred()
                 day.update_id()
                 days.append(day)
                 all_days.append(day)
 
                 # self.logger.debug(f'Day {day[ID_KEY]} (is_complete: {day.is_data_complete}, is_booked: {day.is_booked}): {dict(day)}')
 
-            month.update_with_days(days)
             month.update_id()
             all_months.append(month)
+            months_and_days.append((month, days))
 
+        # Update day group
         AirbnbListingCalendarDay.update_group(all_days)
+
+        # Update months with days
+        for month_and_day in months_and_days:
+            month, day = month_and_day
+            day.update_inferred()
+            month.update_with_days(days)
 
         for month in all_months:
             yield month
