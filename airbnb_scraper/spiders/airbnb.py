@@ -382,7 +382,7 @@ class AirbnbSpider(scrapy.Spider):
             month = AirbnbListingCalendarMonth.load(month_id)
             if month is None:
                 self.logger.debug(f'Creating month: {month_id}')
-                month = AirbnbListingCalendarMonth.create()
+                month = AirbnbListingCalendarMonth.create(creation_date=now)
             month['update_date'] = now
 
             month['start_date'] = start_date
@@ -406,7 +406,7 @@ class AirbnbSpider(scrapy.Spider):
                 day = AirbnbListingCalendarDay.load(day_id)
                 if day is None:
                     self.logger.debug(f'Creating day: {day_id}')
-                    day = AirbnbListingCalendarDay.create()
+                    day = AirbnbListingCalendarDay.create(creation_date=now)
                 day['update_date'] = now
 
                 day['listing_id'] = listing_id
