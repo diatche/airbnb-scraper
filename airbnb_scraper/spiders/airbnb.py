@@ -170,115 +170,114 @@ class AirbnbSpider(scrapy.Spider):
         # Fetch and Write the response data
         data = json.loads(response.body)
 
-        # Return a List of all homes
-        homes = data.get('explore_tabs')[0].get('sections')[0].get('listings')
-
-        if homes is None:
-            try: 
-                homes = data.get('explore_tabs')[0].get('sections')[3].get('listings')
-            except IndexError:
-                try: 
-                    homes = data.get('explore_tabs')[0].get('sections')[2].get('listings')
-                except:
-                    raise CloseSpider("No homes available in the city and price parameters")
-
+        homes = []
         listings = []
         tf = TimezoneFinder()
 
-        for home in homes:
-            listing_info = home.get('listing')
-            listing_id = str(listing_info.get('id'))
-            self.logger.debug(f'Parsing listing "{listing_id}"')
+        for section in data.get('explore_tabs')[0].get('sections'):
+            # Return a List of all homes
+            try: 
+                homes = list(section.get('listings') or [])
+            except IndexError:
+                homes = []
 
-            lat = listing_info.get('lat')
-            lng = listing_info.get('lng')
-            time_zone = tf.timezone_at(lng=lng, lat=lat) or 'UTC'
-            # self.logger.debug(f'Listing {listing_id} time zone: {time_zone}')
+            for home in homes:
+                listing_info = home.get('listing')
+                listing_id = str(listing_info.get('id'))
+                self.logger.debug(f'Parsing listing "{listing_id}"')
 
-            url = LISTING_BASE_URL + str(listing_id)
+                lat = listing_info.get('lat')
+                lng = listing_info.get('lng')
+                time_zone = tf.timezone_at(lng=lng, lat=lat) or 'UTC'
+                # self.logger.debug(f'Listing {listing_id} time zone: {time_zone}')
 
-            listing_dict = {}
-            listing_dict['listing_id'] = listing_id
-            listing_dict['url'] = url
-            listing_dict['time_zone'] = time_zone
+                url = LISTING_BASE_URL + str(listing_id)
 
-            # Add data from fetch
-            for key in AirbnbListing.fields:
-                if key in listing_info:
-                    listing_dict[key] = listing_info[key]
+                listing_dict = {}
+                listing_dict['listing_id'] = listing_id
+                listing_dict['url'] = url
+                listing_dict['time_zone'] = time_zone
 
-            # Add data from host
-            host_info = listing_info.get('user')
-            listing_dict['host_id'] = host_info.get('id')
+                # Add data from fetch
+                for key in AirbnbListing.fields:
+                    if key in listing_info:
+                        listing_dict[key] = listing_info[key]
 
-            # Add data from pricing quote
-            pricing_quote = home.get('pricing_quote')
-            for key in AirbnbListing.fields:
-                if key in pricing_quote:
-                    listing_dict[key] = pricing_quote[key]
-            
-            rate_info = pricing_quote.get('rate')
-            listing_dict['rate'] = rate_info.get('amount')
-            listing_dict['currency'] = rate_info.get('currency')
+                # Add data from host
+                host_info = listing_info.get('user')
+                listing_dict['host_id'] = host_info.get('id')
 
-            rate_with_service_fee_info = pricing_quote.get('rate_with_service_fee')
-            listing_dict['rate_with_service_fee'] = rate_with_service_fee_info.get('amount')
+                # Add data from pricing quote
+                pricing_quote = home.get('pricing_quote')
+                for key in AirbnbListing.fields:
+                    if key in pricing_quote:
+                        listing_dict[key] = pricing_quote[key]
+                
+                rate_info = pricing_quote.get('rate')
+                listing_dict['rate'] = rate_info.get('amount')
+                listing_dict['currency'] = rate_info.get('currency')
 
-            # # Get hash of values
-            # listing_dict['source_hash'] = util.hash_str(listing_dict)
+                rate_with_service_fee_info = pricing_quote.get('rate_with_service_fee')
+                listing_dict['rate_with_service_fee'] = rate_with_service_fee_info.get('amount')
 
-            # Apply data to listing
-            listing = AirbnbListing.load(listing_id)
-            if listing is None:
-                listing = AirbnbListing.create()
-            listings.append(listing)
+                # # Get hash of values
+                # listing_dict['source_hash'] = util.hash_str(listing_dict)
 
-            listing['update_date'] = arrow.now()
-            for key, value in listing_dict.items():
-                listing[key] = value
-            listing.update_id()
+                # Apply data to listing
+                listing = AirbnbListing.load(listing_id)
+                if listing is None:
+                    listing = AirbnbListing.create()
+                listings.append(listing)
 
-            # yield SplashRequest(
-            #     url=LISTING_BASE_URL+listing_id,
-            #     callback=self.parse_listing_details,
-            #     meta=listing,
-            #     endpoint="render.html",
-            #     args={'wait': REQUEST_WAIT}
-            # )
+                listing['update_date'] = arrow.now()
+                for key, value in listing_dict.items():
+                    listing[key] = value
+                listing.update_id()
 
-            # Save listing
-            yield listing
+                # yield SplashRequest(
+                #     url=LISTING_BASE_URL+listing_id,
+                #     callback=self.parse_listing_details,
+                #     meta=listing,
+                #     endpoint="render.html",
+                #     args={'wait': REQUEST_WAIT}
+                # )
 
-            # Check if should fetch calendar
-            time_zone = listing['time_zone']
-            current_month_id = AirbnbListingCalendarMonth.create_id(
-                listing_id=listing_id,
-                date=arrow.get(),
-                tzinfo=time_zone
-            )
-            current_month = AirbnbListingCalendarMonth.load(current_month_id)
-            if current_month is not None and not current_month.is_stale:
-                # No need to refetch calendar
-                self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
-                continue
+                # Save listing
+                yield listing
 
-            # Fetch listing calendar
-            calendar_url = self.create_calendar_url(
-                listing_id=listing_id,
-                time_zone=time_zone
-            )
-            calendar_meta = {
-                'listing_id': listing_id,
-                'currency': listing_dict['currency'],
-                'time_zone': time_zone
-            }
-            self.logger.debug(f'Fetching listing "{listing_id}" calendar: {calendar_url}')
-            yield scrapy.Request(
-                url=calendar_url,
-                callback=self.parse_calendar,
-                meta=calendar_meta,
-                dont_filter=True
-            )
+                # Check if should fetch calendar
+                time_zone = listing['time_zone']
+                current_month_id = AirbnbListingCalendarMonth.create_id(
+                    listing_id=listing_id,
+                    date=arrow.get(),
+                    tzinfo=time_zone
+                )
+                current_month = AirbnbListingCalendarMonth.load(current_month_id)
+                if current_month is not None and not current_month.is_stale:
+                    # No need to refetch calendar
+                    self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
+                    continue
+
+                # Fetch listing calendar
+                calendar_url = self.create_calendar_url(
+                    listing_id=listing_id,
+                    time_zone=time_zone
+                )
+                calendar_meta = {
+                    'listing_id': listing_id,
+                    'currency': listing_dict['currency'],
+                    'time_zone': time_zone
+                }
+                self.logger.debug(f'Fetching listing "{listing_id}" calendar: {calendar_url}')
+                yield scrapy.Request(
+                    url=calendar_url,
+                    callback=self.parse_calendar,
+                    meta=calendar_meta,
+                    dont_filter=True
+                )
+
+        if not bool(listings):
+            raise CloseSpider("No homes available in the city and price parameters")
         
         # After scraping entire listings page, check if more pages are available
         pagination_metadata = data.get('explore_tabs')[0].get('pagination_metadata')
