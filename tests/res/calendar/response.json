@@ -1,0 +1,4293 @@
+{
+    "calendar_months": [
+        {
+            "month": 3,
+            "year": 2020,
+            "days": [
+                {
+                    "date": "2020-03-01",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-02",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-03",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-04",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-05",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-06",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-07",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-08",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-09",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-10",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-11",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-12",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-13",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-03-14",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-03-15",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-16",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-17",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-18",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-19",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-20",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-21",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-22",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-23",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-03-24",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-03-25",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-26",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-27",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-28",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-03-29",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-03-30",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-03-31",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                }
+            ],
+            "listing_id": 19049440,
+            "condition_ranges": [
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-01",
+                    "end_date": "2020-03-01"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-02",
+                    "end_date": "2020-03-02"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-03",
+                    "end_date": "2020-03-03"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-04",
+                    "end_date": "2020-03-04"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-05",
+                    "end_date": "2020-03-05"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-06",
+                    "end_date": "2020-03-06"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-07",
+                    "end_date": "2020-03-07"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-08",
+                    "end_date": "2020-03-08"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-09",
+                    "end_date": "2020-03-09"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-10",
+                    "end_date": "2020-03-10"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-11",
+                    "end_date": "2020-03-11"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-12",
+                    "end_date": "2020-03-12"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-13",
+                    "end_date": "2020-03-13"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-14",
+                    "end_date": "2020-03-14"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-15",
+                    "end_date": "2020-03-15"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-16",
+                    "end_date": "2020-03-16"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-17",
+                    "end_date": "2020-03-17"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-18",
+                    "end_date": "2020-03-18"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-19",
+                    "end_date": "2020-03-19"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-20",
+                    "end_date": "2020-03-20"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-21",
+                    "end_date": "2020-03-21"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-22",
+                    "end_date": "2020-03-22"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-23",
+                    "end_date": "2020-03-23"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-24",
+                    "end_date": "2020-03-24"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-25",
+                    "end_date": "2020-03-25"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-26",
+                    "end_date": "2020-03-26"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-27",
+                    "end_date": "2020-03-27"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-28",
+                    "end_date": "2020-03-28"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-29",
+                    "end_date": "2020-03-29"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-30",
+                    "end_date": "2020-03-30"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-03-31",
+                    "end_date": "2020-03-31"
+                }
+            ]
+        },
+        {
+            "month": 4,
+            "year": 2020,
+            "days": [
+                {
+                    "date": "2020-04-01",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-02",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-03",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-04",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-05",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-06",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-07",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-08",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-09",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-10",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-11",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-12",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-13",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-14",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-15",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-16",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-17",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-18",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-19",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-04-20",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-21",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-22",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-23",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-24",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-25",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-26",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-27",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-28",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-29",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-04-30",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                }
+            ],
+            "listing_id": 19049440,
+            "condition_ranges": [
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-01",
+                    "end_date": "2020-04-01"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-02",
+                    "end_date": "2020-04-02"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-03",
+                    "end_date": "2020-04-03"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-04",
+                    "end_date": "2020-04-04"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-05",
+                    "end_date": "2020-04-05"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-06",
+                    "end_date": "2020-04-06"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-07",
+                    "end_date": "2020-04-07"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-08",
+                    "end_date": "2020-04-08"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-09",
+                    "end_date": "2020-04-09"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-10",
+                    "end_date": "2020-04-10"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-11",
+                    "end_date": "2020-04-11"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-12",
+                    "end_date": "2020-04-12"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-13",
+                    "end_date": "2020-04-13"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-14",
+                    "end_date": "2020-04-14"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-15",
+                    "end_date": "2020-04-15"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-16",
+                    "end_date": "2020-04-16"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-17",
+                    "end_date": "2020-04-17"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-18",
+                    "end_date": "2020-04-18"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-19",
+                    "end_date": "2020-04-19"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-20",
+                    "end_date": "2020-04-20"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-21",
+                    "end_date": "2020-04-21"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-22",
+                    "end_date": "2020-04-22"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-23",
+                    "end_date": "2020-04-23"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-24",
+                    "end_date": "2020-04-24"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-25",
+                    "end_date": "2020-04-25"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-26",
+                    "end_date": "2020-04-26"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-27",
+                    "end_date": "2020-04-27"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-28",
+                    "end_date": "2020-04-28"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-29",
+                    "end_date": "2020-04-29"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-04-30",
+                    "end_date": "2020-04-30"
+                }
+            ]
+        },
+        {
+            "month": 5,
+            "year": 2020,
+            "days": [
+                {
+                    "date": "2020-05-01",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$55"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-02",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-03",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-04",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-05",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-06",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-07",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-08",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-09",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-10",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-11",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-12",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-13",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-14",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-15",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-16",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-17",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-18",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-05-19",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-20",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-21",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-22",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-23",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-24",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-25",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-26",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-27",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-28",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-29",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-30",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-05-31",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                }
+            ],
+            "listing_id": 19049440,
+            "condition_ranges": [
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-01",
+                    "end_date": "2020-05-01"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-02",
+                    "end_date": "2020-05-02"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-03",
+                    "end_date": "2020-05-03"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-04",
+                    "end_date": "2020-05-04"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-05",
+                    "end_date": "2020-05-05"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-06",
+                    "end_date": "2020-05-06"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-07",
+                    "end_date": "2020-05-07"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-08",
+                    "end_date": "2020-05-08"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-09",
+                    "end_date": "2020-05-09"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-10",
+                    "end_date": "2020-05-10"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-11",
+                    "end_date": "2020-05-11"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-12",
+                    "end_date": "2020-05-12"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-13",
+                    "end_date": "2020-05-13"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-14",
+                    "end_date": "2020-05-14"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-15",
+                    "end_date": "2020-05-15"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-16",
+                    "end_date": "2020-05-16"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-17",
+                    "end_date": "2020-05-17"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-18",
+                    "end_date": "2020-05-18"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-19",
+                    "end_date": "2020-05-19"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-20",
+                    "end_date": "2020-05-20"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-21",
+                    "end_date": "2020-05-21"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-22",
+                    "end_date": "2020-05-22"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-23",
+                    "end_date": "2020-05-23"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-24",
+                    "end_date": "2020-05-24"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-25",
+                    "end_date": "2020-05-25"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-26",
+                    "end_date": "2020-05-26"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-27",
+                    "end_date": "2020-05-27"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-28",
+                    "end_date": "2020-05-28"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-29",
+                    "end_date": "2020-05-29"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-30",
+                    "end_date": "2020-05-30"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-05-31",
+                    "end_date": "2020-05-31"
+                }
+            ]
+        },
+        {
+            "month": 6,
+            "year": 2020,
+            "days": [
+                {
+                    "date": "2020-06-01",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-02",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-06-03",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-06-04",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-05",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-06",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-07",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-08",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-09",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-10",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-11",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-12",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-13",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-14",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-15",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-16",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-17",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-18",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-19",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-20",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-21",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-22",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-23",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-24",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-25",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-26",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-27",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-28",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-29",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-06-30",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                }
+            ],
+            "listing_id": 19049440,
+            "condition_ranges": [
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-01",
+                    "end_date": "2020-06-01"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-02",
+                    "end_date": "2020-06-02"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-03",
+                    "end_date": "2020-06-03"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-04",
+                    "end_date": "2020-06-04"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-05",
+                    "end_date": "2020-06-05"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-06",
+                    "end_date": "2020-06-06"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-07",
+                    "end_date": "2020-06-07"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-08",
+                    "end_date": "2020-06-08"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-09",
+                    "end_date": "2020-06-09"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-10",
+                    "end_date": "2020-06-10"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-11",
+                    "end_date": "2020-06-11"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-12",
+                    "end_date": "2020-06-12"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-13",
+                    "end_date": "2020-06-13"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-14",
+                    "end_date": "2020-06-14"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-15",
+                    "end_date": "2020-06-15"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-16",
+                    "end_date": "2020-06-16"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-17",
+                    "end_date": "2020-06-17"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-18",
+                    "end_date": "2020-06-18"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-19",
+                    "end_date": "2020-06-19"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-20",
+                    "end_date": "2020-06-20"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-21",
+                    "end_date": "2020-06-21"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-22",
+                    "end_date": "2020-06-22"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-23",
+                    "end_date": "2020-06-23"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-24",
+                    "end_date": "2020-06-24"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-25",
+                    "end_date": "2020-06-25"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-26",
+                    "end_date": "2020-06-26"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-27",
+                    "end_date": "2020-06-27"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-28",
+                    "end_date": "2020-06-28"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-29",
+                    "end_date": "2020-06-29"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-06-30",
+                    "end_date": "2020-06-30"
+                }
+            ]
+        },
+        {
+            "month": 7,
+            "year": 2020,
+            "days": [
+                {
+                    "date": "2020-07-01",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-02",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-03",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-04",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-05",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-06",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-07",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-08",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-09",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-10",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-11",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-12",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-13",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-14",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-15",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-16",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-17",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-18",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-19",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-20",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-21",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-22",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-23",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-24",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-25",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-26",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-27",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-28",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-29",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-30",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-07-31",
+                    "available": true,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": true,
+                    "bookable": true,
+                    "available_for_checkout": true
+                }
+            ],
+            "listing_id": 19049440,
+            "condition_ranges": [
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-01",
+                    "end_date": "2020-07-01"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-02",
+                    "end_date": "2020-07-02"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-03",
+                    "end_date": "2020-07-03"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-04",
+                    "end_date": "2020-07-04"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-05",
+                    "end_date": "2020-07-05"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-06",
+                    "end_date": "2020-07-06"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-07",
+                    "end_date": "2020-07-07"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-08",
+                    "end_date": "2020-07-08"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-09",
+                    "end_date": "2020-07-09"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-10",
+                    "end_date": "2020-07-10"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-11",
+                    "end_date": "2020-07-11"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-12",
+                    "end_date": "2020-07-12"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-13",
+                    "end_date": "2020-07-13"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-14",
+                    "end_date": "2020-07-14"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-15",
+                    "end_date": "2020-07-15"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-16",
+                    "end_date": "2020-07-16"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-17",
+                    "end_date": "2020-07-17"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-18",
+                    "end_date": "2020-07-18"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-19",
+                    "end_date": "2020-07-19"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-20",
+                    "end_date": "2020-07-20"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-21",
+                    "end_date": "2020-07-21"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-22",
+                    "end_date": "2020-07-22"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-23",
+                    "end_date": "2020-07-23"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-24",
+                    "end_date": "2020-07-24"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-25",
+                    "end_date": "2020-07-25"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-26",
+                    "end_date": "2020-07-26"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-27",
+                    "end_date": "2020-07-27"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-28",
+                    "end_date": "2020-07-28"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-29",
+                    "end_date": "2020-07-29"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-30",
+                    "end_date": "2020-07-30"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-07-31",
+                    "end_date": "2020-07-31"
+                }
+            ]
+        },
+        {
+            "month": 8,
+            "year": 2020,
+            "days": [
+                {
+                    "date": "2020-08-01",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": true
+                },
+                {
+                    "date": "2020-08-02",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-03",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-04",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-05",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-06",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-07",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-08",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-09",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-10",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-11",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-12",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-13",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-14",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-15",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-16",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-17",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-18",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-19",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-20",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-21",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-22",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-23",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-24",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-25",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-26",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-27",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-28",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-29",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-30",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                },
+                {
+                    "date": "2020-08-31",
+                    "available": false,
+                    "max_nights": 1125,
+                    "min_nights": 1,
+                    "price": {
+                        "local_price_formatted": "$65"
+                    },
+                    "available_for_checkin": false,
+                    "bookable": false,
+                    "available_for_checkout": false
+                }
+            ],
+            "listing_id": 19049440,
+            "condition_ranges": [
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-01",
+                    "end_date": "2020-08-01"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-02",
+                    "end_date": "2020-08-02"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-03",
+                    "end_date": "2020-08-03"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-04",
+                    "end_date": "2020-08-04"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-05",
+                    "end_date": "2020-08-05"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-06",
+                    "end_date": "2020-08-06"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-07",
+                    "end_date": "2020-08-07"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-08",
+                    "end_date": "2020-08-08"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-09",
+                    "end_date": "2020-08-09"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-10",
+                    "end_date": "2020-08-10"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-11",
+                    "end_date": "2020-08-11"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-12",
+                    "end_date": "2020-08-12"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-13",
+                    "end_date": "2020-08-13"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-14",
+                    "end_date": "2020-08-14"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-15",
+                    "end_date": "2020-08-15"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-16",
+                    "end_date": "2020-08-16"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-17",
+                    "end_date": "2020-08-17"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-18",
+                    "end_date": "2020-08-18"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-19",
+                    "end_date": "2020-08-19"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-20",
+                    "end_date": "2020-08-20"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-21",
+                    "end_date": "2020-08-21"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-22",
+                    "end_date": "2020-08-22"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-23",
+                    "end_date": "2020-08-23"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-24",
+                    "end_date": "2020-08-24"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 2,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-25",
+                    "end_date": "2020-08-25"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 3,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-26",
+                    "end_date": "2020-08-26"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 4,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-27",
+                    "end_date": "2020-08-27"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 5,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-28",
+                    "end_date": "2020-08-28"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 6,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-29",
+                    "end_date": "2020-08-29"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 0,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-30",
+                    "end_date": "2020-08-30"
+                },
+                {
+                    "conditions": {
+                        "closed_to_arrival": false,
+                        "closed_to_departure": false,
+                        "end_day_of_week": 1,
+                        "max_nights": 1125,
+                        "min_nights": 1
+                    },
+                    "start_date": "2020-08-31",
+                    "end_date": "2020-08-31"
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "only_show_available_for_checkin_on_datepicker": false,
+        "enable_availability_for_previous_day": false,
+        "constant_min_nights": 1
+    }
+}}

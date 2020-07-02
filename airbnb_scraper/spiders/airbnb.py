@@ -2,13 +2,32 @@
 import json
 import collections
 import re
-import numpy as np
 import logging
 import sys
 import scrapy
+import math
+import arrow
+import dateutil
+import urllib
 from scrapy_splash import SplashRequest
 from scrapy.exceptions import CloseSpider
-from airbnb_scraper.items import AirbnbScraperItem
+from airbnb_scraper.items import AirbnbListing, AirbnbListingCalendarMonth, AirbnbListingCalendarDay, ID_KEY
+from airbnb_scraper.db import AirbnbMongoDB
+from airbnb_scraper import util
+from timezonefinder import TimezoneFinder
+
+REQUEST_WAIT = '0.5'
+AVAILABILITY_MONTHS = 6
+EXPLORE_BASE_URL = 'https://www.airbnb.com/api/v2/explore_tabs'
+LISTING_BASE_URL = 'https://www.airbnb.com/rooms/'
+CALENDAR_BASE_URL = 'https://www.airbnb.com/api/v2/homes_pdp_availability_calendar'
+KEY = 'd306zoyjsyarp7ifhu67rjxn52tv0t20'
+LOCALE = 'en'
+
+FILTER_URL_KEY_MAP = {
+    'room_type': 'room_types[]',
+    'room_types': 'room_types[]',
+}
 
 
 # ********************************************************************************************
@@ -17,242 +36,411 @@ from airbnb_scraper.items import AirbnbScraperItem
 
 
 # *********************************************************************************************
-# Run crawler with -> scrapy crawl airbnb -o 21to25.json -a price_lb='' -a price_ub=''        *
+# Run crawler with -> scrapy crawl airbnb -o 21to25.json -a price_min='' -a price_max=''        *
 # *********************************************************************************************
 
 class AirbnbSpider(scrapy.Spider):
     name = 'airbnb'
     allowed_domains = ['www.airbnb.com']
 
-    '''
+    """
     You don't have to override __init__ each time and can simply use self.parameter (See https://bit.ly/2Wxbkd9),
     but I find this way much more readable.
-    '''
-    def __init__(self, city='',price_lb='', price_ub='', *args,**kwargs):
-        super(AirbnbSpider, self).__init__(*args, **kwargs)
-        self.city = city
-        self.price_lb = price_lb
-        self.price_ub = price_ub
+    """
+    def __init__(self, city='', currency='', months=AVAILABILITY_MONTHS, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters = dict(kwargs)
+        if bool(city):
+            self.filters['query'] = city
 
+        if 'price_min' not in self.filters:
+             self.filters['price_min'] = 0
+        self.filters['price_min'] = int(math.ceil(float(self.filters['price_min'])))
+
+        if 'price_max' not in self.filters:
+             self.filters['price_max'] = 0
+        self.filters['price_max'] = int(math.floor(float(self.filters['price_max'])))
+
+        if self.filters['price_max'] <= 0 or self.filters['price_max'] < self.filters['price_min']:
+            del self.filters['price_max']
+
+        if self.filters['price_min'] <= 0:
+            del self.filters['price_min']
+
+        self.logger.debug(f'Created crawler with filters: {self.filters}')
+
+        self.currency = currency
+        self.months = months
+        self.request_date = arrow.get()
+
+    def base_params(self):
+        params = {
+            'key': KEY,
+            'locale': LOCALE,
+        }
+        if bool(self.currency):
+            params['currency'] = self.currency
+        return params
+
+    @classmethod
+    def create_url(cls, base, params=None):
+        if not bool(params):
+            return base
+        query = urllib.parse.urlencode({str(k): str(v) for k, v in params.items()})
+        return base + '?' + query
+
+    def create_explore_url(self, items_offset=0, section_offset=0):
+        params = self.base_params()
+        params.update({
+            '_format': 'for_explore_search_web',
+            'fetch_filters': 'true',
+            'has_zero_guest_treatment': 'true',
+            'is_guided_search': 'true',
+            'is_new_cards_experiment': 'true',
+            'is_standard_search': 'true',
+            'items_per_grid': '18',
+            'luxury_pre_launch': 'false',
+            'metadata_only': 'false',
+            'query_understanding_enabled': 'true',
+            'refinement_paths%5B%5D': '%2Fhomes',
+            'search_type': 'FILTER_CHANGE',
+            'selected_tab_id': 'home_tab',
+            'show_groupings': 'true',
+            'supports_for_you_v3': 'true',
+            'timezone_offset': '-240',
+            'version': '1.5.6'
+        })
+        for key, value in self.filters.items():
+            if key in FILTER_URL_KEY_MAP:
+                key = FILTER_URL_KEY_MAP[key]
+            params[key] = value
+
+        if bool(items_offset):
+            params['items_offset'] = items_offset
+        if bool(section_offset):
+            params['section_offset'] = section_offset
+
+        return type(self).create_url(EXPLORE_BASE_URL, params=params)
+
+    def create_calendar_url(self, listing_id='', time_zone='UTC'):
+        local_request_date = self.request_date.to(time_zone)
+        params = self.base_params()
+        params.update({
+            'listing_id': listing_id,
+            'month': local_request_date.month,
+            'year': local_request_date.year,
+            'count': self.months,
+        })
+        return type(self).create_url(
+            CALENDAR_BASE_URL,
+            params=params
+        )
+    
     def start_requests(self):
-        '''Sends a scrapy request to the designated url price range
+        """Sends a scrapy request to the designated url price range
 
         Args:
         Returns:
-        '''
+        """
 
-        url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-              '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-              '621cf853-d03e-4108-b717-c14962b6ab8b&currency=CAD&experiences_per_grid=20&fetch_filters=true'
-              '&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-              '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-              '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false&'
-              'query={2}'
-              '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-              '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-              '&timezone_offset=-240&version=1.5.6'                  
-              '&price_min={0}&price_max={1}')
-        new_url = url.format(self.price_lb, self.price_ub, self.city)
-            
+        # Open database connection
+        AirbnbMongoDB.shared().open()
 
-        if (int(self.price_lb)  >= 990):
-            url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-              '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-              '621cf853-d03e-4108-b717-c14962b6ab8b&currency=CAD&experiences_per_grid=20&fetch_filters=true'
-              '&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-              '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-              '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false&'
-              'query={1}'
-              '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-              '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-              '&timezone_offset=-240&version=1.5.6'                  
-              '&price_min={0}')
-            new_url = url.format(self.price_lb, self.city)
+        url = self.create_explore_url()
+        self.logger.debug(f'Starting explore: \n{url}')
+        yield scrapy.Request(
+            url=url,
+            callback=self.parse_explore,
+            dont_filter=True
+        )
 
-        yield scrapy.Request(url=new_url, callback=self.parse_id, dont_filter=True)
+    def closed(self, reason):
+        # Close database connection
+        AirbnbMongoDB.shared().close()
 
-
-    def parse_id(self, response):
-        '''Parses all the URLs/ids/available fields from the initial json object and stores into dictionary
+    def parse_explore(self, response):
+        """Parses all the URLs/ids/available fields from the initial json object and stores into dictionary
 
         Args:
             response: Json object from explore_tabs
         Returns:
-        '''
+        """
+        self.logger.debug(f'Parsing explore: \n{response.url}')
         
         # Fetch and Write the response data
         data = json.loads(response.body)
 
-        # Return a List of all homes
-        homes = data.get('explore_tabs')[0].get('sections')[0].get('listings')
+        homes = []
+        listings = []
+        tf = TimezoneFinder()
 
-        if homes is None:
+        for section in data.get('explore_tabs')[0].get('sections'):
+            # Return a List of all homes
             try: 
-                homes = data.get('explore_tabs')[0].get('sections')[3].get('listings')
+                homes = list(section.get('listings') or [])
             except IndexError:
-                try: 
-                    homes = data.get('explore_tabs')[0].get('sections')[2].get('listings')
-                except:
-                    raise CloseSpider("No homes available in the city and price parameters")
+                homes = []
+
+            for home in homes:
+                listing_info = home.get('listing')
+                listing_id = str(listing_info.get('id'))
+                self.logger.debug(f'Parsing listing "{listing_id}"')
+
+                lat = listing_info.get('lat')
+                lng = listing_info.get('lng')
+                time_zone = tf.timezone_at(lng=lng, lat=lat) or 'UTC'
+                # self.logger.debug(f'Listing {listing_id} time zone: {time_zone}')
+
+                url = LISTING_BASE_URL + str(listing_id)
+
+                listing_dict = {}
+                listing_dict['listing_id'] = listing_id
+                listing_dict['url'] = url
+                listing_dict['time_zone'] = time_zone
+
+                # Add data from fetch
+                for key in AirbnbListing.fields:
+                    if key in listing_info:
+                        listing_dict[key] = listing_info[key]
+
+                # Add data from host
+                host_info = listing_info.get('user')
+                listing_dict['host_id'] = host_info.get('id')
+
+                # Add data from pricing quote
+                pricing_quote = home.get('pricing_quote')
+                for key in AirbnbListing.fields:
+                    if key in pricing_quote:
+                        listing_dict[key] = pricing_quote[key]
+                
+                rate_info = pricing_quote.get('rate')
+                listing_dict['rate'] = rate_info.get('amount')
+                listing_dict['currency'] = rate_info.get('currency')
+
+                rate_with_service_fee_info = pricing_quote.get('rate_with_service_fee')
+                listing_dict['rate_with_service_fee'] = rate_with_service_fee_info.get('amount')
+
+                # # Get hash of values
+                # listing_dict['source_hash'] = util.hash_str(listing_dict)
+
+                # Apply data to listing
+                listing = AirbnbListing.load(listing_id)
+                if listing is None:
+                    listing = AirbnbListing.create()
+                listings.append(listing)
+
+                listing['update_date'] = arrow.now()
+                for key, value in listing_dict.items():
+                    listing[key] = value
+                listing.update_id()
+
+                # yield SplashRequest(
+                #     url=LISTING_BASE_URL+listing_id,
+                #     callback=self.parse_listing_details,
+                #     meta=listing,
+                #     endpoint="render.html",
+                #     args={'wait': REQUEST_WAIT}
+                # )
+
+                # Save listing
+                yield listing
+
+                # Check if should fetch calendar
+                time_zone = listing['time_zone']
+                current_month_id = AirbnbListingCalendarMonth.create_id(
+                    listing_id=listing_id,
+                    date=arrow.get(),
+                    tzinfo=time_zone
+                )
+                current_month = AirbnbListingCalendarMonth.load(current_month_id)
+                if current_month is not None and not current_month.is_stale:
+                    # No need to refetch calendar
+                    self.logger.debug(f'Skipping listing "{listing_id}" calendar fetch')
+                    continue
+
+                # Fetch listing calendar
+                calendar_url = self.create_calendar_url(
+                    listing_id=listing_id,
+                    time_zone=time_zone
+                )
+                calendar_meta = {
+                    'listing_id': listing_id,
+                    'currency': listing_dict['currency'],
+                    'time_zone': time_zone
+                }
+                self.logger.debug(f'Fetching listing "{listing_id}" calendar: {calendar_url}')
+                yield scrapy.Request(
+                    url=calendar_url,
+                    callback=self.parse_calendar,
+                    meta=calendar_meta,
+                    dont_filter=True
+                )
+
+        if not bool(listings):
+            raise CloseSpider("No homes available in the city and price parameters")
         
-        base_url = 'https://www.airbnb.com/rooms/'
-        data_dict = collections.defaultdict(dict) # Create Dictionary to put all currently available fields in
-
-        for home in homes:
-            room_id = str(home.get('listing').get('id'))
-            url = base_url + str(home.get('listing').get('id'))
-            data_dict[room_id]['url'] = url
-            data_dict[room_id]['price'] = home.get('pricing_quote').get('rate').get('amount')
-            data_dict[room_id]['bathrooms'] = home.get('listing').get('bathrooms')
-            data_dict[room_id]['bedrooms'] = home.get('listing').get('bedrooms')
-            data_dict[room_id]['host_languages'] = home.get('listing').get('host_languages')
-            data_dict[room_id]['is_business_travel_ready'] = home.get('listing').get('is_business_travel_ready')
-            data_dict[room_id]['is_fully_refundable'] = home.get('listing').get('is_fully_refundable')
-            data_dict[room_id]['is_new_listing'] = home.get('listing').get('is_new_listing')
-            data_dict[room_id]['is_superhost'] = home.get('listing').get('is_superhost')
-            data_dict[room_id]['lat'] = home.get('listing').get('lat')
-            data_dict[room_id]['lng'] = home.get('listing').get('lng')
-            data_dict[room_id]['localized_city'] = home.get('listing').get('localized_city')
-            data_dict[room_id]['localized_neighborhood'] = home.get('listing').get('localized_neighborhood')
-            data_dict[room_id]['listing_name'] = home.get('listing').get('name')
-            data_dict[room_id]['person_capacity'] = home.get('listing').get('person_capacity')
-            data_dict[room_id]['picture_count'] = home.get('listing').get('picture_count')
-            data_dict[room_id]['reviews_count'] = home.get('listing').get('reviews_count')
-            data_dict[room_id]['room_type_category'] = home.get('listing').get('room_type_category')
-            data_dict[room_id]['star_rating'] = home.get('listing').get('star_rating')
-            data_dict[room_id]['host_id'] = home.get('listing').get('user').get('id')
-            data_dict[room_id]['avg_rating'] = home.get('listing').get('avg_rating')
-            data_dict[room_id]['can_instant_book'] = home.get('pricing_quote').get('can_instant_book')
-            data_dict[room_id]['monthly_price_factor'] = home.get('pricing_quote').get('monthly_price_factor')
-            data_dict[room_id]['currency'] = home.get('pricing_quote').get('rate').get('currency')
-            data_dict[room_id]['amt_w_service'] = home.get('pricing_quote').get('rate_with_service_fee').get('amount')
-            data_dict[room_id]['rate_type'] = home.get('pricing_quote').get('rate_type')
-            data_dict[room_id]['weekly_price_factor'] = home.get('pricing_quote').get('weekly_price_factor')
-
-
-        # Iterate through dictionary of URLs in the single page to send a SplashRequest for each
-        for room_id in data_dict:
-            yield SplashRequest(url=base_url+room_id, callback=self.parse_details,
-                                meta=data_dict.get(room_id),
-                                endpoint="render.html",
-                                args={'wait': '0.5'})
-
-        # After scraping entire listings page, check if more pages
+        # After scraping entire listings page, check if more pages are available
         pagination_metadata = data.get('explore_tabs')[0].get('pagination_metadata')
         if pagination_metadata.get('has_next_page'):
-
-            items_offset = pagination_metadata.get('items_offset')
-            section_offset = pagination_metadata.get('section_offset')
-
-            new_url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-                      '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-                      '621cf853-d03e-4108-b717-c14962b6ab8b&currency=CAD&experiences_per_grid=20'
-                      '&fetch_filters=true&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-                      '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-                      '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false'
-                      '&query={4}'
-                      '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-                      '&satori_version=1.1.9&screen_height=797&screen_size=medium&screen_width=885'
-                      '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-                      '&timezone_offset=-240&version=1.5.6'
-                      '&items_offset={0}&section_offset={1}&price_min={2}&price_max={3}')
-            new_url = new_url.format(items_offset, section_offset, self.price_lb, self.price_ub, self.city)
-            
-            if (int(self.price_lb) >= 990):
-                url = ('https://www.airbnb.com/api/v2/explore_tabs?_format=for_explore_search_web&_intents=p1'
-                      '&allow_override%5B%5D=&auto_ib=false&client_session_id='
-                      '621cf853-d03e-4108-b717-c14962b6ab8b&currency=CAD&experiences_per_grid=20'
-                      '&fetch_filters=true&guidebooks_per_grid=20&has_zero_guest_treatment=true&is_guided_search=true'
-                      '&is_new_cards_experiment=true&is_standard_search=true&items_per_grid=18'
-                      '&key=d306zoyjsyarp7ifhu67rjxn52tv0t20&locale=en&luxury_pre_launch=false&metadata_only=false'
-                      '&query={3}'
-                      '&query_understanding_enabled=true&refinement_paths%5B%5D=%2Fhomes&s_tag=QLb9RB7g'
-                      '&satori_version=1.1.9&screen_height=797&screen_size=medium&screen_width=885'
-                      '&search_type=FILTER_CHANGE&selected_tab_id=home_tab&show_groupings=true&supports_for_you_v3=true'
-                      '&timezone_offset=-240&version=1.5.6'
-                      '&items_offset={0}&section_offset={1}&price_min={2}')
-                new_url = url.format(items_offset, section_offset, self.price_lb, self.city)
-            
             # If there is a next page, update url and scrape from next page
-            yield scrapy.Request(url=new_url, callback=self.parse_id)
+            url = self.create_explore_url(
+                items_offset=pagination_metadata.get('items_offset'),
+                section_offset=pagination_metadata.get('section_offset'),
+            )
+            self.logger.debug(f'Continuing explore: \n{url}')
+            yield scrapy.Request(
+                url=url,
+                callback=self.parse_explore
+            )
 
-    def parse_details(self, response):
-        '''Parses details for a single listing page and stores into AirbnbScraperItem object
+    # def parse_listing_details(self, response):
+    #     """
+    #     Parses details for a single listing page and stores into AirbnbListing object
 
-        Args:
-            response: The response from the page (same as inspecting page source)
-        Returns:
-            An AirbnbScraperItem object containing the set of fields pertaining to the listing
-        '''
-        # New Instance
-        listing = AirbnbScraperItem()
+    #     Args:
+    #         response: The response from the page (same as inspecting page source)
+    #     Returns:
+    #         An AirbnbListing object containing the set of fields pertaining to the listing
+    #     """
+    #     assert response.url.startswith(LISTING_BASE_URL), f'Unexpected listing response URL: {response.url}'
 
-        # Fill in fields for Instance from initial scrapy call
-        listing['is_superhost'] = response.meta['is_superhost']
-        listing['host_id'] = str(response.meta['host_id'])
-        listing['price'] = response.meta['price']
-        listing['url'] = response.meta['url']
-        listing['bathrooms'] = response.meta['bathrooms']
-        listing['bedrooms'] = response.meta['bedrooms']
-        listing['is_business_travel_ready'] = response.meta['is_business_travel_ready']
-        listing['is_fully_refundable'] = response.meta['is_fully_refundable']
-        listing['is_new_listing'] = response.meta['is_new_listing']
-        listing['lat'] = response.meta['lat']
-        listing['lng'] = response.meta['lng']
-        listing['localized_city'] = response.meta['localized_city']
-        listing['localized_neighborhood'] = response.meta['localized_neighborhood']
-        listing['listing_name'] = response.meta['listing_name']
-        listing['person_capacity'] = response.meta['person_capacity']
-        listing['picture_count'] = response.meta['picture_count']
-        listing['reviews_count'] = response.meta['reviews_count']
-        listing['room_type_category'] = response.meta['room_type_category']
-        listing['star_rating'] = response.meta['star_rating']
-        listing['avg_rating'] = response.meta['avg_rating']
-        listing['can_instant_book'] = response.meta['can_instant_book']
-        listing['monthly_price_factor'] = response.meta['monthly_price_factor']
-        listing['weekly_price_factor'] = response.meta['weekly_price_factor']
-        listing['currency'] = response.meta['currency']
-        listing['amt_w_service'] = response.meta['amt_w_service']
-        listing['rate_type'] = response.meta['rate_type']
+    #     listing = response.meta
 
-        # Other fields scraped from html response.text using regex (some might fail hence try/catch)
+    #     # Other fields scraped from html response.text using regex (some might fail hence try/catch)
+    #     try:
+    #         listing['host_reviews'] = int((re.search(r'"badges":\[{"count":(.*?),"id":"reviews"',
+    #                                   response.text)).group(1))
+    #     except:
+    #         listing['host_reviews'] = 0
+
+    #     # Main six rating metrics + overall_guest_satisfication
+    #     try:
+    #         listing['accuracy'] = int((re.search('"accuracy_rating":(.*?),"', response.text)).group(1))
+    #         listing['checkin'] = int((re.search('"checkin_rating":(.*?),"', response.text)).group(1))
+    #         listing['cleanliness'] = int((re.search('"cleanliness_rating":(.*?),"', response.text)).group(1))
+    #         listing['communication'] = int((re.search('"communication_rating":(.*?),"', response.text)).group(1))
+    #         listing['value'] = int((re.search('"value_rating":(.*?),"', response.text)).group(1))
+    #         listing['location'] = int((re.search('"location_rating":(.*?),"', response.text)).group(1))
+    #         listing['guest_satisfication'] = int((re.search('"guest_satisfaction_overall":(.*?),"',
+    #                                          response.text)).group(1))
+    #     except:
+    #         listing['accuracy'] = 0
+    #         listing['checkin'] = 0
+    #         listing['cleanliness'] = 0
+    #         listing['communication'] = 0
+    #         listing['value'] = 0
+    #         listing['location'] = 0
+    #         listing['guest_satisfication'] = 0
+
+    #     # Extra Host Fields
+    #     try:
+    #         listing['response_rate'] = int((re.search('"response_rate_without_na":"(.*?)%",', response.text)).group(1))
+    #         listing['response_time'] = (re.search('"response_time_without_na":"(.*?)",', response.text)).group(1)
+    #     except:
+    #         listing['response_rate'] = 0
+    #         listing['response_time'] = ''
+
+    def parse_calendar(self, response):
+        assert response.url.startswith(CALENDAR_BASE_URL), f'Unexpected calendar response URL: {response.url}'
+
+        # Clean JSON response
+        json_str = str(response.body)
         try:
-            listing['num_beds'] = int((re.search('"bed_label":"(.).*","bedroom_label"', response.text)).group(1))
-        except:
-            listing['num_beds'] = 0
-
+            json_start = json_str.index('{')
+        except Exception:
+            json_start = 0
         try:
-            listing['host_reviews'] = int((re.search(r'"badges":\[{"count":(.*?),"id":"reviews"',
-                                      response.text)).group(1))
-        except:
-            listing['host_reviews'] = 0
+            json_end = json_str.rindex('}')
+        except Exception:
+            json_end = len(json_str) - 1
+        json_str = json_str[json_start:json_end + 1]
+        # self.logger.debug(f'Calendar URL:\n{response.url}')
+        # self.logger.debug(f'Calendar response body:\n{response.body}')
 
-        # Main six rating metrics + overall_guest_satisfication
-        try:
-            listing['accuracy'] = int((re.search('"accuracy_rating":(.*?),"', response.text)).group(1))
-            listing['checkin'] = int((re.search('"checkin_rating":(.*?),"', response.text)).group(1))
-            listing['cleanliness'] = int((re.search('"cleanliness_rating":(.*?),"', response.text)).group(1))
-            listing['communication'] = int((re.search('"communication_rating":(.*?),"', response.text)).group(1))
-            listing['value'] = int((re.search('"value_rating":(.*?),"', response.text)).group(1))
-            listing['location'] = int((re.search('"location_rating":(.*?),"', response.text)).group(1))
-            listing['guest_satisfication'] = int((re.search('"guest_satisfaction_overall":(.*?),"',
-                                             response.text)).group(1))
-        except:
-            listing['accuracy'] = 0
-            listing['checkin'] = 0
-            listing['cleanliness'] = 0
-            listing['communication'] = 0
-            listing['value'] = 0
-            listing['location'] = 0
-            listing['guest_satisfication'] = 0
+        data = json.loads(json_str)
+        month_infos = data.get('calendar_months')
+        listing_id = response.meta['listing_id']
+        assert bool(listing_id), 'Missing listing ID'
+        time_zone = response.meta['time_zone'] or 'UTC'
+        currency = response.meta['currency']
 
-        # Extra Host Fields
-        try:
-            listing['response_rate'] = int((re.search('"response_rate_without_na":"(.*?)%",', response.text)).group(1))
-            listing['response_time'] = (re.search('"response_time_without_na":"(.*?)",', response.text)).group(1)
-        except:
-            listing['response_rate'] = 0
-            listing['response_time'] = ''
+        all_months = []
+        all_days = []
+        months_and_days = []
+        now = arrow.get()
 
-        # Finally return the object
-        yield listing
+        for month_info in month_infos:
+            month_num = month_info.get('month')
+            year_num = month_info.get('year')
+            start_date = arrow.get(year_num, month_num, 1)
+            month_id = AirbnbListingCalendarMonth.create_id(
+                listing_id=listing_id,
+                date=start_date,
+                tzinfo=time_zone
+            )
+            # self.logger.debug(f'Parsing listing "{listing_id}" month {year_num}-{month_num:02} ({month_id})')
+            month = AirbnbListingCalendarMonth.load(month_id)
+            if month is None:
+                self.logger.debug(f'Creating month: {month_id}')
+                month = AirbnbListingCalendarMonth.create(creation_date=now)
+            month['update_date'] = now
+
+            month['start_date'] = start_date
+            month['end_date'] = start_date.ceil('month').floor('day')
+
+            month['listing_id'] = listing_id
+            month['currency'] = currency
+            month['time_zone'] = time_zone
+            month['month'] = month_num
+            month['year'] = year_num
+            
+            days = []
+            day_infos = month_info.get('days')
+            for day_info in day_infos:
+                date = arrow.get(day_info.get('date')).replace(tzinfo=time_zone)
+                day_id = AirbnbListingCalendarDay.create_id(
+                    listing_id=listing_id,
+                    date=date,
+                    tzinfo=time_zone
+                )
+                day = AirbnbListingCalendarDay.load(day_id)
+                if day is None:
+                    self.logger.debug(f'Creating day: {day_id}')
+                    day = AirbnbListingCalendarDay.create(creation_date=now)
+                day['update_date'] = now
+
+                day['listing_id'] = listing_id
+                day['currency'] = currency
+                day['time_zone'] = time_zone
+
+                day['date'] = date
+                day['available'] = day_info.get('available')
+
+                price_strings = re.findall(r'\d+', day_info.get('price').get('local_price_formatted') or '')
+                if len(price_strings) == 1:
+                    day['price'] = float(price_strings[0])
+
+                day.update_id()
+                days.append(day)
+                all_days.append(day)
+
+                # self.logger.debug(f'Day {day[ID_KEY]} (is_complete: {day.is_data_complete}, is_booked: {day.is_booked}): {dict(day)}')
+
+            month.update_id()
+            all_months.append(month)
+            months_and_days.append((month, days))
+
+        # Update day group
+        AirbnbListingCalendarDay.update_group(all_days)
+
+        # Update days and months with days
+        for month_and_days in months_and_days:
+            month, days = month_and_days
+            for day in days:
+                day.update_inferred()
+            month.update_with_days(days)
+
+        for month in all_months:
+            yield month
+        for day in all_days:
+            yield day
